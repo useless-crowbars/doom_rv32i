@@ -19,11 +19,12 @@ EXTRA_CFLAGS="-DE1M1ONLY=1"
 IGNORE_WARNINGS=-Wno-int-conversion -Wno-incompatible-pointer-types -Wno-implicit-int -Wno-implicit-function-declaration
 CFLAGS?=-m32 -Os -g -w $(IGNORE_WARNINGS) -flto -DNORMALUNIX -DLINUX -DMAXPLAYERS=1 -DRANGECHECK -DDISABLE_NETWORK -fdata-sections -ffunction-sections $(EXTRA_CFLAGS) # -DUSEASM
 LDFLAGS?=-L/usr/X11R6/lib -Wl,--gc-sections $(CFLAGS)
-LIBS?=-lXext -lX11 -lnsl -lm -lpthread
+LIBS?=-lglfw -lGL
 CFLAGS_HOST?=-m32 $(IGNORE_WARNINGS) -DNORMALUNIX -DLINUX $(EXTRA_CFLAGS)
 LDFLAGS_HOST?=-L/usr/X11R6/lib
-LIBS_HOST?=-lXext -lX11 -lnsl -lm -lpthread
-CS?=i_video.c
+LIBS_HOST?=-lglfw -lGL
+#CS?=i_video.c
+CS?=i_video_pajseri.c gpu.c
 
 
 # If you want to reduce printf junk
