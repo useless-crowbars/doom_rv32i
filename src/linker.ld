@@ -3,8 +3,11 @@
 OUTPUT_FORMAT("elf32-littleriscv", "elf32-littleriscv", "elf32-littleriscv")
 /*OUTPUT_ARCH(rv32i) */
 
+ENTRY(_start)
+
 SECTIONS
 {
+    . = 0x100000;
     .text :
     {
         *(.text)

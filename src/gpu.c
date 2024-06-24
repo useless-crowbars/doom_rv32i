@@ -13,6 +13,48 @@ void update_screen() {}
 void poll_keyboard() {}
 void cleanup() {}
 
+double __divdf3 (double a, double b) { return 0; }
+double __floatsidf (int i) { return 0; }
+double __muldf3 (double a, double b) { return 0; }
+int __divsi3(int a, int b) { return 0; }
+int __fixdfsi (double a) { return 0; }
+int __gedf2 (double a, double b) { return 0; }
+int __ltdf2 (double a, double b) { return 0; }
+int __modsi3(int a, int b) { return 0; }
+int __mulsi3(int a, int b) { return 0; }
+long __muldi3 (long a, long b) { return 0; }
+unsigned int __udivsi3 (unsigned int a, unsigned int b) { return 0; }
+
+char *stpcpy(char *restrict dst, const char *restrict src) { return NULL; }
+char *strcpy(char *restrict dst, const char *restrict src) { return NULL; }
+char *strncpy(char* dst, const char *restrict src, size_t dsize) { return NULL; }
+int abs(int j) { return j; }
+int atoi(const char *nptr) { return 0; }
+int snprintf(char* str, size_t size, const char *restrict format, ...) { return 0; }
+int sprintf(char *restrict str, const char *restrict format, ...) { return 0; }
+int strcasecmp(const char *s1, const char *s2) { return 0; }
+int strcmp(const char *s1, const char *s2) { return 0; }
+int strncasecmp(const char* s1, const char* s2, size_t n) { return 0; }
+int tolower(int c) { return 0; }
+int toupper(int c) { return 0; }
+size_t strlen(const char *s) { return 0; }
+void *memcpy(void* dest, const void* src, size_t n) { }
+void *memset(void* s, int c, size_t n) { }
+char *strcat(char *restrict dst, const char *restrict src) { return NULL; }
+
+
+typedef void FILE;
+typedef uint32_t useconds_t;
+void *alloca(size_t size) { return NULL; }
+void exit(int status) { }
+int fclose(FILE *stream) { return 0; }
+int fprintf(FILE *restrict stream, const char *restrict format, ...) { return 0; }
+int printf(const char *restrict format, ...) { return 0; }
+void *malloc(size_t size) { return 0; }
+int getc(FILE *stream) { return 0; }
+int getchar(void) { return 0; }
+int usleep(useconds_t usec) { return 0; }
+
 #else
 
 #include <stdio.h>

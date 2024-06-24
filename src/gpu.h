@@ -10,6 +10,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <stddef.h>
 
 void init_screen();
 void write_screen(int x, int y, uint32_t color);
