@@ -125,7 +125,7 @@ void Z_Free (void* ptr)
     memblock_t*		block;
     memblock_t*		other;
 #if SET_MEMORY_DEBUG
-	printf( "Free: %p\n", ptr );
+	//printf( "Free: %p\n", ptr );
 #endif
     block = (memblock_t *) ( (byte *)ptr - sizeof(memblock_t));
     if (block->id != ZONEID)
@@ -192,7 +192,7 @@ void*	Z_Malloc_Internal_Extended (int size, int tag, void *ptr, const char * fil
 #endif
 	ret = Z_Malloc_Internal( size, tag, ptr );
 #if SET_MEMORY_DEBUG
-	printf( "%p\n", ret );
+	//printf( "%p\n", ret );
 #endif
 	return ret;
 }

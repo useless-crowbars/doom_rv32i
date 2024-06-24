@@ -60,7 +60,7 @@ void I_StartFrame()
 {
 }
 
-void I_StartTic ()
+void I_StartTic()
 {
 	if (end) {
 		I_ShutdownGraphics();
@@ -99,6 +99,6 @@ void I_StartTic ()
 		D_PostEvent(&event);
 
 		change_ack = true;
-		printf("key event: %d %d\n", event.type, rc);
+		//printf("key event: %d %d\n", event.type, rc);
 	}
 }

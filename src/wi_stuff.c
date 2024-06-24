@@ -489,11 +489,6 @@ WI_drawOnLnode
 	V_DrawPatch(lnodes[wbs->epsd][n].x, lnodes[wbs->epsd][n].y,
 		    FB, c[i]);
     }
-    else
-    {
-	// DEBUG
-	printf("Could not place patch on level %d", n+1); 
-    }
 }
 
 

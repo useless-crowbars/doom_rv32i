@@ -609,12 +609,6 @@ void D_DoomMain (void)
 	break;
     }
     
-    printf ("%s\n",title);
-
-    if (devparm)
-	printf(D_DEVSTR);
-    
-
     // turbo option
     if ( (p=M_CheckParm ("-turbo")) )
     {
@@ -628,7 +622,6 @@ void D_DoomMain (void)
 	    scale = 10;
 	if (scale > 400)
 	    scale = 400;
-	printf ("turbo scale: %i%%\n",scale);
 	forwardmove[0] = forwardmove[0]*scale/100;
 	forwardmove[1] = forwardmove[1]*scale/100;
 	sidemove[0] = sidemove[0]*scale/100;
@@ -653,8 +646,6 @@ void D_DoomMain (void)
 	  case registered:
 	    sprintf (file,"~"DEVMAPS"E%cM%c.wad",
 		     myargv[p+1][0], myargv[p+2][0]);
-	    printf("Warping to Episode %s, Map %s.\n",
-		   myargv[p+1],myargv[p+2]);
 	    break;
 	    
 	  case commercial:
@@ -698,37 +689,6 @@ void D_DoomMain (void)
     startmap = 1;
     autostart = false;
 
-		
-    p = M_CheckParm ("-skill");
-    if (p && p < myargc-1)
-    {
-	startskill = myargv[p+1][0]-'1';
-	autostart = true;
-    }
-
-    p = M_CheckParm ("-episode");
-    if (p && p < myargc-1)
-    {
-	startepisode = myargv[p+1][0]-'0';
-	startmap = 1;
-	autostart = true;
-    }
-	
-    p = M_CheckParm ("-timer");
-    if (p && p < myargc-1 && deathmatch)
-    {
-	int     time;
-	time = atoi(myargv[p+1]);
-	printf("Levels will end after %d minute",time);
-	if (time>1)
-	    printf("s");
-	printf(".\n");
-    }
-
-    p = M_CheckParm ("-avg");
-    if (p && p < myargc-1 && deathmatch)
-	printf("Austin Virtual Gaming: Levels will end after 20 minutes\n");
-
 #if E1M1ONLY
 	p = 1;
     startepisode = 1;
@@ -750,13 +710,13 @@ void D_DoomMain (void)
 #endif
     
     // init subsystems
-    printf ("V_Init: allocate screens.\n");
+    //printf ("V_Init: allocate screens.\n");
     V_Init ();
 
-    printf ("M_LoadDefaults: Load system defaults.\n");
+    //printf ("M_LoadDefaults: Load system defaults.\n");
     M_LoadDefaults ();              // load before initing other systems
 
-    printf ("Z_Init: Init zone memory allocation daemon. \n");
+    //printf ("Z_Init: Init zone memory allocation daemon. \n");
     Z_Init ();
 
 //    printf ("W_Init: Init WADfiles.\n");
@@ -787,41 +747,15 @@ void D_DoomMain (void)
 		    I_Error("\nThis is not the registered version.");
     }
     
-    // Iff additonal PWAD files are used, print modified banner
-    if (modifiedgame)
-    {
-	/*m*/printf (
-	    "===========================================================================\n"
-	    "ATTENTION:  This version of DOOM has been modified.  If you would like to\n"
-	    "get a copy of the original game, call 1-800-IDGAMES or see the readme file.\n"
-	    "        You will not receive technical support for modified games.\n"
-	    "                      press enter to continue\n"
-	    "===========================================================================\n"
-	    );
-	getchar ();
-    }
-	
-
     // Check and print which version is executed.
     switch ( gamemode )
     {
       case shareware:
       case indetermined:
-	printf (
-	    "===========================================================================\n"
-	    "                                Shareware!\n"
-	    "===========================================================================\n"
-	);
 	break;
       case registered:
       case retail:
       case commercial:
-	printf (
-	    "===========================================================================\n"
-	    "                 Commercial product - do not distribute!\n"
-	    "         Please report software piracy to the SPA: 1-800-388-PIR8\n"
-	    "===========================================================================\n"
-	);
 	break;
 	
       default:
@@ -829,28 +763,20 @@ void D_DoomMain (void)
 	break;
     }
 
-    printf ("M_Init: Init miscellaneous info.\n");
     M_Init ();
 
-    printf ("R_Init: Init DOOM refresh daemon - ");
     R_Init ();
 
-    printf ("\nP_Init: Init Playloop state.\n");
     P_Init ();
 
-    printf ("I_Init: Setting up machine state.\n");
     I_Init ();
 
-    printf ("D_CheckNetGame: Checking network game status.\n");
     D_CheckNetGame ();
 
-    printf ("S_Init: Setting up sound.\n");
     S_Init (snd_SfxVolume /* *8 */, snd_MusicVolume /* *8*/ );
 
-    printf ("HU_Init: Setting up heads up display.\n");
     HU_Init ();
 
-    printf ("ST_Init: Init status bar.\n");
     ST_Init ();
 
     // check for a driver that wants intermission stats
@@ -861,7 +787,6 @@ void D_DoomMain (void)
 	extern  void*	statcopy;                            
 
 	statcopy = (void*)atoi(myargv[p+1]);
-	printf ("External statistics registered.\n");
     }
     
     // start the apropriate game based on parms
@@ -1134,7 +1059,6 @@ extern const texture_t**	textures;
 		while( p && p < myargc-1 )
 		{
 			int ai = atoi( myargv[p+1] );
-			printf( "SKIPPING MAP %d\n", ai );
 			if( ai == -1 ) break;
 			bakemaps[ai] = "SKIP";
 			p++;
@@ -1198,7 +1122,7 @@ extern const texture_t**	textures;
 		fclose( bf );
 	}
 
-	exit(0);
+	return;
 #endif
 
     D_DoomLoop ();  // never returns

@@ -244,7 +244,6 @@ R_FindPlane
     if (lastvisplane - visplanes == MAXVISPLANES)
 	{
 		//I_Error ("R_FindPlane: no more visplanes");
-		printf( "Visplane warning\n" );
 	}
 	
     lastvisplane++;

@@ -29,12 +29,11 @@
 #include "m_argv.h"
 
 #include "doomstat.h"
+doomcom_t doomcom_data;
 
 void I_NetCmd (void) { }
 void I_InitNetwork (void) {
-
-
-    doomcom = malloc (sizeof (*doomcom) );
+    doomcom = &doomcom_data;
     memset (doomcom, 0, sizeof(*doomcom) );
 	doomcom-> ticdup = 1;    
 	netgame = false;

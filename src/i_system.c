@@ -118,25 +118,19 @@ void I_Init (void)
 //
 void I_Quit (void)
 {
-    D_QuitNetGame ();
     I_ShutdownSound();
     I_ShutdownMusic();
     M_SaveDefaults ();
     I_ShutdownGraphics();
-    exit(0);
+
+    // crash
+    while (1) {
+    }
 }
 
 void I_WaitVBL(int count)
 {
-#ifdef SGI
-    sginap(1);                                           
-#else
-#ifdef SUN
-    sleep(0);
-#else
-    usleep (count * (1000000/700) );                                
-#endif
-#endif
+    //usleep (count * (1000000/700) );                                
 }
 
 void I_BeginRead(void)
@@ -168,8 +162,9 @@ void I_Error (char *error, ...)
     if (demorecording)
 	G_CheckDemoStatus();
 
-    D_QuitNetGame ();
     I_ShutdownGraphics();
     
-    exit(-1);
+    // crash
+    while (1) {
+    }
 }

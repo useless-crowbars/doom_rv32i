@@ -235,7 +235,6 @@ int W_CheckNumForName (char* name)
 		}
 	}
 
-	printf( "WARNING: FILE NOT FOUND: %s\n", name );
 
 	// TFB. Not found.
 	return -1;

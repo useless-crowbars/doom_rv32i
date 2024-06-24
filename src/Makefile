@@ -23,7 +23,7 @@ LIBS?=-lglfw -lGL
 CFLAGS_HOST?=-m32 $(IGNORE_WARNINGS) -DNORMALUNIX -DLINUX $(EXTRA_CFLAGS)
 LDFLAGS_HOST?=-L/usr/X11R6/lib
 LIBS_HOST?=-lglfw -lGL
-CS?=i_video_pajseri.c gpu.c
+CS?=i_video_pajseri.c gpu.c mul_div.c other.c
 
 
 # If you want to reduce printf junk
@@ -38,11 +38,11 @@ CFLAGS+=-DSET_MEMORY_DEBUG=0
 #CFLAGS_HOST+=-fsanitize=address -static-libasan -g
 
 # For RISC-V
-CFLAGS:=-Os -D__STDC_HOSTED__=0 -w $(IGNORE_WARNINGS) -march=rv32i -mabi=ilp32 -mstrict-align -nostdlib -ffreestanding -DMAXPLAYERS=1 -DDISABLE_NETWORK -fdata-sections -ffunction-sections $(EXTRA_CFLAGS)
-LDFLAGS:= -T linker.ld $(CFLAGS)
-LIBS:=
-SUPPORT_FILES:=startup.S
-CC:=riscv64-elf-gcc
+#CFLAGS:=-Os -D__STDC_HOSTED__=0 -w $(IGNORE_WARNINGS) -march=rv32i -mabi=ilp32 -mstrict-align -nostdlib -ffreestanding -DMAXPLAYERS=1 -DDISABLE_NETWORK -fdata-sections -ffunction-sections $(EXTRA_CFLAGS)
+#LDFLAGS:= $(CFLAGS)
+#LIBS:=
+#SUPPORT_FILES:=startup.S
+#CC:=riscv64-elf-gcc
 
 # Tricky - if removing maps, also be careful to add/remove maps from stripchoice.txt
 STRIKEMAP:=-strikemap 2 3 4 5 6 7 8 9 
