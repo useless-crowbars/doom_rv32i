@@ -24,13 +24,10 @@
 //rcsid[] = "$Id: m_bbox.c,v 1.1 1997/02/03 22:45:10 b1 Exp $";
 
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
 
-#include <stdarg.h>
+#ifndef __riscv
 #include <sys/time.h>
-#include <unistd.h>
+#endif
 
 #include "doomdef.h"
 #include "m_misc.h"
@@ -40,9 +37,6 @@
 #include "d_net.h"
 #include "g_game.h"
 
-#ifdef __GNUG__
-#pragma implementation "i_system.h"
-#endif
 #include "i_system.h"
 
 
@@ -93,6 +87,7 @@ byte* I_ZoneBase (int*	size)
 //
 int  I_GetTime (void)
 {
+#ifndef __riscv
     struct timeval	tp;
     struct timezone	tzp;
     int			newtics;
@@ -103,6 +98,8 @@ int  I_GetTime (void)
 	basetime = tp.tv_sec;
     newtics = (tp.tv_sec-basetime)*TICRATE + tp.tv_usec*TICRATE/1000000;
     return newtics;
+#endif
+    return 0;
 }
 
 
@@ -166,16 +163,6 @@ extern boolean demorecording;
 
 void I_Error (char *error, ...)
 {
-    va_list	argptr;
-
-    // Message first.
-    va_start (argptr,error);
-    fprintf (stderr, "Error: ");
-    vfprintf (stderr,error,argptr);
-    fprintf (stderr, "\n");
-    va_end (argptr);
-
-    fflush( stderr );
 
     // Shutdown. Here might be other errors.
     if (demorecording)

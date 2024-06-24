@@ -1,0 +1,15 @@
+emdoom
+emdoom.gentables.initial
+support/add_sprites.txt
+support/baked_map_data.c
+support/baked_map_data.o
+support/baked_texture_data.c
+support/baked_texture_data.o
+support/bakedoutput.txt
+support/rawwad_begin.c
+support/rawwad_begin.h
+support/rawwad_host_begin.o
+support/rawwad_use.c
+support/rawwad_use.h
+support/rawwad_use.o
+support/shrinkwad

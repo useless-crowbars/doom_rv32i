@@ -23,8 +23,6 @@
 
 //static const char rcsid[] = "$Id: am_map.c,v 1.4 1997/02/03 21:24:33 b1 Exp $";
 
-#include <stdio.h>
-
 
 #include "z_zone.h"
 #include "doomdef.h"
@@ -989,7 +987,7 @@ AM_drawFline
     register int ay;
     register int d;
     
-    static fuck = 0;
+    static int fuck = 0;
 
     // For debugging only
     if (      fl->a.x < 0 || fl->a.x >= f_w
@@ -997,7 +995,6 @@ AM_drawFline
 	   || fl->b.x < 0 || fl->b.x >= f_w
 	   || fl->b.y < 0 || fl->b.y >= f_h)
     {
-	fprintf(stderr, "fuck %d \r", fuck++);
 	return;
     }
 

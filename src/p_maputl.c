@@ -28,9 +28,6 @@
 //rcsid[] = "$Id: p_maputl.c,v 1.5 1997/02/03 22:45:11 b1 Exp $";
 
 
-#include <stdlib.h>
-
-
 #include "m_bbox.h"
 
 #include "doomdef.h"

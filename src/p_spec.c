@@ -28,8 +28,6 @@
 //static const char
 //rcsid[] = "$Id: p_spec.c,v 1.6 1997/02/03 22:45:12 b1 Exp $";
 
-#include <stdlib.h>
-
 #include "doomdef.h"
 #include "doomstat.h"
 
@@ -354,8 +352,6 @@ P_FindNextHighestFloor
 	// Check for overflow. Exit.
 	if ( h >= MAX_ADJOINING_SECTORS )
 	{
-	    fprintf( stderr,
-		     "Sector with more than 20 adjoining sectors\n" );
 	    break;
 	}
     }

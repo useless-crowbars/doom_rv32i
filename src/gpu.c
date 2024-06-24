@@ -1,30 +1,39 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <GLFW/glfw3.h>
-
 #include "gpu.h"
-
-GLFWwindow *window;
-uint32_t *screen;
-void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods);
-
 bool end = false;
 char key_changed;
 bool key_pressed;
 bool change_ack = true;
 
 
+#ifdef __riscv
+void init_window() {}
+void init_screen() {}
+void write_screen(int x, int y, uint32_t color) {}
+void update_screen() {}
+void poll_keyboard() {}
+void cleanup() {}
+
+#else
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <GLFW/glfw3.h>
+
+
+GLFWwindow *window;
+uint32_t *screen;
+void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods);
+
+
 void init_window()
 {
 	if (!glfwInit()) {
-		fprintf(stderr, "Failed to initialize GLFW\n");
 		exit(1);
 	}
 
 	window = glfwCreateWindow(GPU_SCREEN_WIDTH, GPU_SCREEN_HEIGHT, "Simple GPU Simulation", NULL, NULL);
 	if (!window) {
 		glfwTerminate();
-		fprintf(stderr, "Failed to create GLFW window\n");
 		exit(1);
 	}
 
@@ -38,7 +47,6 @@ void init_screen()
 
 	screen = (uint32_t *)malloc(GPU_SCREEN_WIDTH * GPU_SCREEN_HEIGHT * sizeof(uint32_t));
 	if (!screen) {
-		fprintf(stderr, "Failed to allocate memory for screen buffer\n");
 		exit(1);
 	}
 
@@ -52,7 +60,6 @@ void init_screen()
 void write_screen(int x, int y, uint32_t color)
 {
 	if (x < 0 || x >= SCREEN_WIDTH || y < 0 || y >= SCREEN_HEIGHT) {
-		fprintf(stderr, "Error: Pixel coordinates out of bounds\n");
 		return;
 	}
 
@@ -123,3 +130,5 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 	key_pressed = (action == GLFW_PRESS);
 	change_ack = false;
 }
+
+#endif

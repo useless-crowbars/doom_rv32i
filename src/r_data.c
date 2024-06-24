@@ -41,10 +41,6 @@
 #include "doomstat.h"
 #include "r_sky.h"
 
-#ifdef LINUX
-#include  <alloca.h>
-#endif
-
 
 #include "r_data.h"
 
@@ -495,7 +491,6 @@ void R_InitTextures (void)
 			if( mpatch->patch >= nummappatches )
 			{
 				// Odd - this might be a bug with the actual texture here.
-				fprintf( stderr, "WARNING WARNING WARNING mpatch->patch %d > %d @ %d / %d\n", mpatch->patch, nummappatches, j, texture->patchcount );
 				patch->patch = nummappatches-1;
 			}
 			else

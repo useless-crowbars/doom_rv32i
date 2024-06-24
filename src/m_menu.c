@@ -25,14 +25,6 @@
 //static const char
 //rcsid[] = "$Id: m_menu.c,v 1.7 1997/02/03 22:45:10 b1 Exp $";
 
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <ctype.h>
-
-
 #include "doomdef.h"
 #include "dstrings.h"
 
@@ -183,7 +175,6 @@ menu_t*	currentMenu;
 void M_NewGame(int choice);
 void M_Episode(int choice);
 void M_ChooseSkill(int choice);
-void M_LoadGame(int choice);
 void M_SaveGame(int choice);
 void M_Options(int choice);
 void M_EndGame(int choice);
@@ -203,7 +194,6 @@ void M_Sound(int choice);
 void M_FinishReadThis(int choice);
 void M_LoadSelect(int choice);
 void M_SaveSelect(int choice);
-void M_ReadSaveStrings(void);
 void M_QuickSave(void);
 void M_QuickLoad(void);
 
@@ -251,7 +241,6 @@ menuitem_t MainMenu[]=
 {
     {1,"M_NGAME",M_NewGame,'n'},
     {1,"M_OPTION",M_Options,'o'},
-    {1,"M_LOADG",M_LoadGame,'l'},
     {1,"M_SAVEG",M_SaveGame,'s'},
     // Another hickup with Special edition.
     {1,"M_RDTHIS",M_ReadThis,'r'},
@@ -505,38 +494,6 @@ menu_t  SaveDef =
 
 
 //
-// M_ReadSaveStrings
-//  read the strings from the savegame files
-//
-void M_ReadSaveStrings(void)
-{
-    int             handle;
-    int             count;
-    int             i;
-    char    name[256];
-	
-    for (i = 0;i < load_end;i++)
-    {
-	if (M_CheckParm("-cdrom"))
-	    sprintf(name,"c:\\doomdata\\"SAVEGAMENAME"%d.dsg",i);
-	else
-	    sprintf(name,SAVEGAMENAME"%d.dsg",i);
-
-	handle = open (name, O_RDONLY | 0, 0666);
-	if (handle == -1)
-	{
-	    strcpy(&savegamestrings[i][0],EMPTYSTRING);
-	    LoadMenu[i].status = 0;
-	    continue;
-	}
-	count = read (handle, &savegamestrings[i], SAVESTRINGSIZE);
-	close (handle);
-	LoadMenu[i].status = 1;
-    }
-}
-
-
-//
 // M_LoadGame & Cie.
 //
 void M_DrawLoad(void)
@@ -584,23 +541,7 @@ void M_LoadSelect(int choice)
 	sprintf(name,"c:\\doomdata\\"SAVEGAMENAME"%d.dsg",choice);
     else
 	sprintf(name,SAVEGAMENAME"%d.dsg",choice);
-    G_LoadGame (name);
     M_ClearMenus ();
-}
-
-//
-// Selected from DOOM menu
-//
-void M_LoadGame (int choice)
-{
-    if (netgame)
-    {
-	M_StartMessage(LOADNET,NULL,false);
-	return;
-    }
-	
-    M_SetupNextMenu(&LoadDef);
-    M_ReadSaveStrings();
 }
 
 
@@ -630,7 +571,6 @@ void M_DrawSave(void)
 //
 void M_DoSave(int slot)
 {
-    G_SaveGame (slot,savegamestrings[slot]);
     M_ClearMenus ();
 
     // PICK QUICKSAVE SLOT YET?
@@ -668,7 +608,6 @@ void M_SaveGame (int choice)
 	return;
 	
     M_SetupNextMenu(&SaveDef);
-    M_ReadSaveStrings();
 }
 
 
@@ -701,7 +640,6 @@ void M_QuickSave(void)
     if (quickSaveSlot < 0)
     {
 	M_StartControlPanel();
-	M_ReadSaveStrings();
 	M_SetupNextMenu(&SaveDef);
 	quickSaveSlot = -2;	// means to pick a slot now
 	return;
@@ -930,8 +868,6 @@ void M_Episode(int choice)
     if ( (gamemode == registered)
 	 && (choice > 2))
     {
-      fprintf( stderr,
-	       "M_Episode: 4th episode requires UltimateDOOM\n");
       choice = 0;
     }
 	 
@@ -1134,7 +1070,6 @@ void M_ChangeDetail(int choice)
     detailLevel = 1 - detailLevel;
 
     // FIXME - does not work. Remove anyway?
-    fprintf( stderr, "M_ChangeDetail: low detail mode n.a.\n");
 
     return;
     
@@ -1549,12 +1484,6 @@ boolean M_Responder (event_t* ev)
 	    M_StartControlPanel();
 	    S_StartSound(NULL,sfx_swtchn);
 	    M_SaveGame(0);
-	    return true;
-				
-	  case KEY_F3:            // Load
-	    M_StartControlPanel();
-	    S_StartSound(NULL,sfx_swtchn);
-	    M_LoadGame(0);
 	    return true;
 				
 	  case KEY_F4:            // Sound Volume

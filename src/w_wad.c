@@ -25,22 +25,12 @@
 //rcsid[] = "$Id: w_wad.c,v 1.5 1997/02/03 16:47:57 b1 Exp $";
 
 //Added elsewhere
+#include <stddef.h>
 
 #ifdef GENERATE_BAKED
 #include "support/rawwad.h"
 #else
 #include "support/rawwad_use.h"
-#endif
-
-#ifdef NORMALUNIX
-#include <ctype.h>
-#include <sys/types.h>
-#include <string.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <alloca.h>
-#define O_BINARY				0
 #endif
 
 #include "doomtype.h"

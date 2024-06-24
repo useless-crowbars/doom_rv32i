@@ -17,13 +17,12 @@ CC_HOST?=gcc
 
 EXTRA_CFLAGS="-DE1M1ONLY=1"
 IGNORE_WARNINGS=-Wno-int-conversion -Wno-incompatible-pointer-types -Wno-implicit-int -Wno-implicit-function-declaration
-CFLAGS?=-m32 -Os -g -w $(IGNORE_WARNINGS) -flto -DNORMALUNIX -DLINUX -DMAXPLAYERS=1 -DRANGECHECK -DDISABLE_NETWORK -fdata-sections -ffunction-sections $(EXTRA_CFLAGS) # -DUSEASM
+CFLAGS?=-m32 -Os -g -w $(IGNORE_WARNINGS) -flto -DNORMALUNIX -DLINUX -DMAXPLAYERS=1 -DDISABLE_NETWORK -fdata-sections -ffunction-sections $(EXTRA_CFLAGS) # -DUSEASM
 LDFLAGS?=-L/usr/X11R6/lib -Wl,--gc-sections $(CFLAGS)
 LIBS?=-lglfw -lGL
 CFLAGS_HOST?=-m32 $(IGNORE_WARNINGS) -DNORMALUNIX -DLINUX $(EXTRA_CFLAGS)
 LDFLAGS_HOST?=-L/usr/X11R6/lib
 LIBS_HOST?=-lglfw -lGL
-#CS?=i_video.c
 CS?=i_video_pajseri.c gpu.c
 
 
@@ -39,11 +38,11 @@ CFLAGS+=-DSET_MEMORY_DEBUG=0
 #CFLAGS_HOST+=-fsanitize=address -static-libasan -g
 
 # For RISC-V
-#CFLAGS:=-fno-stack-protector -static-libgcc -fdata-sections -ffunction-sections -g -Os -march=rv32ima -mabi=ilp32 -static -I/usr/include -DRV32IMA_BUILD -DDISABLE_NETWORK -I/usr/include
-#LDFLAGS:= -T flatfile-rv32ima.lds -nostdlib -Wl,--gc-sections
+#CFLAGS:=-Os -D__STDC_HOSTED__=0 -Wall -Wextra -march=rv32i -mabi=ilp32 -mstrict-align -nostdlib -ffreestanding -w $(IGNORE_WARNINGS) -flto -DMAXPLAYERS=1 -DDISABLE_NETWORK $(EXTRA_CFLAGS) # -DUSEASM
+#LDFLAGS:= $(CFLAGS)
 #LIBS:=
 #SUPPORT_FILES:=startup.S
-#CC:=riscv64-unknown-elf-gcc
+#CC:=riscv64-elf-gcc
 
 # Tricky - if removing maps, also be careful to add/remove maps from stripchoice.txt
 STRIKEMAP:=-strikemap 2 3 4 5 6 7 8 9 
@@ -111,10 +110,7 @@ CS+=				\
 		info.c				\
 		i_net.c			\
 		d_net.c			\
-		stubs.c    \
-		sounds.c	\
-		s_sound.c		\
-		i_sound.c
+		stubs.c
 
 all:	 emdoom
 
@@ -166,8 +162,8 @@ emdoom.size : emdoom
 	nm --print-size --size-sort --radix=d emdoom  | grep -v " r " | grep -v " R "
 	size emdoom -A
 
-#emdoom.gentables : i_main.c $(CS) support/rawwad_host_begin.o $(BAKED)
-#	$(CC_HOST) $(CFLAGS_HOST) $(LDFLAGS_HOST) $^ -o emdoom.gentables -g -DGENERATE_BAKED $(LIBS_HOST)
+emdoom.gentables : i_main.c $(CS) support/rawwad_host_begin.o $(BAKED)
+	$(CC_HOST) $(CFLAGS_HOST) $(LDFLAGS_HOST) $^ -o emdoom.gentables -g -DGENERATE_BAKED $(LIBS_HOST)
 
 emdoom.gentables.initial : i_main.c $(CS) support/rawwad_host_begin.o
 	$(CC_HOST) $(CFLAGS_HOST) $(LDFLAGS_HOST) $^ -o emdoom.gentables.initial -g -DGENERATE_BAKED -DGENERATE_BAKED_INITIAL $(LIBS_HOST)
@@ -178,6 +174,7 @@ clean:
 	rm -f emdoom emdoom.gentables emdoom.gentables.initial $(BAKED) support/wadder support/rawwad_host.o support/rawwad_host_use.o support/rawwad_host_begin.o support/shrinkwad
 	rm -rf support/baked_map_data.c  support/baked_texture_data.c
 	rm -rf support/rawwad_begin.c support/rawwad_begin.o support/rawwad_use.c support/rawwad_use.o support/bakedoutput.txt
+	rm -rf support/add_sprites.txt support/rawwad_begin.h support/rawwad_use.h
 
 ### Extra features
 

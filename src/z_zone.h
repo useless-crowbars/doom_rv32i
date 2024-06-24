@@ -27,8 +27,6 @@
 #ifndef __Z_ZONE__
 #define __Z_ZONE__
 
-#include <stdio.h>
-
 //
 // ZONE MEMORY
 // PU - purge tags.
@@ -50,7 +48,7 @@ void*	Z_Malloc_Internal_Extended (int size, int tag, void *ptr, const char * fil
 void    Z_Free (void *ptr);
 void    Z_FreeTags (int lowtag, int hightag);
 void    Z_DumpHeap (int lowtag, int hightag);
-void    Z_FileDumpHeap (FILE *f);
+//void    Z_FileDumpHeap (FILE *f);
 void    Z_CheckHeap (void);
 void    Z_ChangeTag2 (void *ptr, int tag);
 int     Z_FreeMemory (void);

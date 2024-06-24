@@ -187,8 +187,8 @@ void*	Z_Malloc_Internal_Extended (int size, int tag, void *ptr, const char * fil
 	void * ret;
 	usedram += size;
 #if SET_MEMORY_DEBUG
-	printf( "MALLOC: %d %d %p @ %s:%d -> %d ->", size, tag, ptr, fil, line, usedram );
-	fflush( stdout );
+	//printf( "MALLOC: %d %d %p @ %s:%d -> %d ->", size, tag, ptr, fil, line, usedram );
+	//fflush( stdout );
 #endif
 	ret = Z_Malloc_Internal( size, tag, ptr );
 #if SET_MEMORY_DEBUG
@@ -333,82 +333,6 @@ Z_FreeTags
 	    Z_Free ( (byte *)block+sizeof(memblock_t));
     }
 }
-
-
-
-//
-// Z_DumpHeap
-// Note: TFileDumpHeap( stdout ) ?
-//
-void
-Z_DumpHeap
-( int		lowtag,
-  int		hightag )
-{
-    memblock_t*	block;
-	
-    printf ("zone size: %i  location: %p\n",
-	    mainzone->size,mainzone);
-    
-    printf ("tag range: %i to %i\n",
-	    lowtag, hightag);
-	
-    for (block = mainzone->blocklist.next ; ; block = block->next)
-    {
-	if (block->tag >= lowtag && block->tag <= hightag)
-	    printf ("block:%p    size:%7i    user:%p    tag:%3i\n",
-		    block, block->size, block->user, block->tag);
-		
-	if (block->next == &mainzone->blocklist)
-	{
-	    // all blocks have been hit
-	    break;
-	}
-	
-	if ( (byte *)block + block->size != (byte *)block->next)
-	    printf ("ERROR: block size does not touch the next block\n");
-
-	if ( block->next->prev != block)
-	    printf ("ERROR: next block doesn't have proper back link\n");
-
-	if (!block->user && !block->next->user)
-	    printf ("ERROR: two consecutive free blocks\n");
-    }
-}
-
-
-//
-// Z_FileDumpHeap
-//
-void Z_FileDumpHeap (FILE* f)
-{
-    memblock_t*	block;
-	
-    fprintf (f,"zone size: %i  location: %p\n",mainzone->size,mainzone);
-	
-    for (block = mainzone->blocklist.next ; ; block = block->next)
-    {
-	fprintf (f,"block:%p    size:%7i    user:%p    tag:%3i\n",
-		 block, block->size, block->user, block->tag);
-		
-	if (block->next == &mainzone->blocklist)
-	{
-	    // all blocks have been hit
-	    break;
-	}
-	
-	if ( (byte *)block + block->size != (byte *)block->next)
-	    fprintf (f,"ERROR: block size does not touch the next block\n");
-
-	if ( block->next->prev != block)
-	    fprintf (f,"ERROR: next block doesn't have proper back link\n");
-
-	if (!block->user && !block->next->user)
-	    fprintf (f,"ERROR: two consecutive free blocks\n");
-    }
-}
-
-
 
 //
 // Z_CheckHeap

@@ -6,7 +6,6 @@
 #include "v_video.h"
 
 #include "./gpu.h"
-#include <stdlib.h>
 
 static byte lpalette[256 * 3];
 

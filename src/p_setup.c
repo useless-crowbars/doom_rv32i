@@ -27,8 +27,6 @@
 //rcsid[] = "$Id: p_setup.c,v 1.5 1997/02/03 22:45:12 b1 Exp $";
 
 
-#include <math.h>
-
 #include "z_zone.h"
 
 #include "m_swap.h"
@@ -815,7 +813,6 @@ P_SetupLevel
     P_LoadVertexes (lumpnum+ML_VERTEXES);
 */
 
-fprintf( stderr, "LOADING FROM MAP: %s\n", lumpname );
 	int mapid = 0;
 	while( bakemaps[mapid] )
 	{

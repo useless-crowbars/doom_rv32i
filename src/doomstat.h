@@ -28,6 +28,8 @@
 #ifndef __D_STATE__
 #define __D_STATE__
 
+#include <stddef.h>
+
 // We need globally shared data structures,
 //  for defining the global state variables.
 #include "doomdata.h"
@@ -242,7 +244,7 @@ extern  int		maxammo[NUMAMMO];
 
 // File handling stuff.
 extern	char		basedefault[1024];
-extern  FILE*		debugfile;
+extern  void*		debugfile;
 
 // if true, load all graphics at level load
 extern  boolean         precache;

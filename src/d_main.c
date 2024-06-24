@@ -31,15 +31,9 @@
 #define	FGCOLOR		8
 
 
-#ifdef NORMALUNIX
+#ifdef GENERATE_BAKED
 #include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
 #endif
-
 
 #include "doomdef.h"
 #include "doomstat.h"
@@ -114,7 +108,7 @@ int             startepisode;
 int		startmap;
 boolean		autostart;
 
-FILE*		debugfile;
+void*		debugfile = NULL;
 
 boolean		advancedemo;
 
@@ -351,14 +345,6 @@ void D_DoomLoop (void)
     if (demorecording)
 	G_BeginRecording ();
 		
-    if (M_CheckParm ("-debugfile"))
-    {
-	char    filename[20];
-	sprintf (filename,"debug%i.txt",consoleplayer);
-	printf ("debug output to: %s\n",filename);
-	debugfile = fopen (filename,"w");
-    }
-	
     I_InitGraphics ();
 
     while (1)
@@ -557,7 +543,6 @@ void D_DoomMain (void)
 
     IdentifyVersion ();
 	
-    setbuf (stdout, NULL);
     modifiedgame = false;
 	
     nomonsters = M_CheckParm ("-nomonsters");
@@ -903,16 +888,6 @@ void D_DoomMain (void)
 	D_DoomLoop ();  // never returns
     }
 	
-    p = M_CheckParm ("-loadgame");
-    if (p && p < myargc-1)
-    {
-	if (M_CheckParm("-cdrom"))
-	    sprintf(file, "c:\\doomdata\\"SAVEGAMENAME"%c.dsg",myargv[p+1][0]);
-	else
-	    sprintf(file, SAVEGAMENAME"%c.dsg",myargv[p+1][0]);
-	G_LoadGame (file);
-    }
-	
 
     if ( gameaction != ga_loadgame )
     {
@@ -1173,7 +1148,6 @@ extern const texture_t**	textures;
 			numnodes = 0;
 			if( strcmp( bakemaps[i], "SKIP" ) != 0 )
 			{
-				fprintf( stderr, "$$$$ %s\n", bakemaps[i] );
 				P_SetupLevel( 1, (intptr_t)bakemaps[i], 0, 0 );
 			}
 
