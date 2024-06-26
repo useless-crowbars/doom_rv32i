@@ -401,7 +401,8 @@ void R_InitTextures (void)
 	names = W_CacheLumpName ("PNAMES", PU_STATIC);
 	nummappatches = LONG ( *((int *)names) );
 	name_p = names+4;
-	patchlookup = alloca (nummappatches*sizeof(*patchlookup));
+	int map[nummappatches];
+	patchlookup = map;
 	
 	for (i=0 ; i<nummappatches ; i++)
 	{
@@ -525,7 +526,6 @@ void R_InitTextures (void)
 	for (i=0 ; i<numtextures ; i++)
 		R_GenerateLookup (i);
    
-#else
 #endif
 
 	// Create translation table for global animation.
@@ -731,6 +731,7 @@ void R_PrecacheLevel (void)
 	if (demoplayback)
 		return;
 	
+#ifdef GENERATE_BAKED
 	// Precache flats.
 	flatpresent = alloca(numflats);
 	memset (flatpresent,0,numflats);		
@@ -749,9 +750,7 @@ void R_PrecacheLevel (void)
 		{
 			lump = firstflat + i;
 
-#ifdef GENERATE_BAKED
 				printf( "\nACCESS_LUMP 7 %d\n", lump );
-#endif
 
 			flatmemory += lumpinfo[lump].size;
 			W_CacheLumpNum(lump, PU_CACHE);
@@ -789,9 +788,7 @@ void R_PrecacheLevel (void)
 		{
 			lump = texture->patches[j].patch;
 
-#ifdef GENERATE_BAKED
 				printf( "\nACCESS_LUMP 6 %d\n", lump );
-#endif
 
 			texturememory += lumpinfo[lump].size;
 			W_CacheLumpNum(lump , PU_CACHE);
@@ -822,15 +819,14 @@ void R_PrecacheLevel (void)
 				lump = firstspritelump + sf->lump[k];
 
 
-#ifdef GENERATE_BAKED
 				printf( "\nACCESS_LUMP 8 %d\n", lump );
-#endif
 
 				spritememory += lumpinfo[lump].size;
 				W_CacheLumpNum(lump , PU_CACHE);
 			}
 		}
 	}
+#endif
 }
 
 

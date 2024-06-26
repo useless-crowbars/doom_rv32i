@@ -50,7 +50,6 @@
 #include "f_finale.h"
 #include "f_wipe.h"
 
-#include "m_argv.h"
 #include "m_misc.h"
 #include "m_menu.h"
 
@@ -545,144 +544,18 @@ void D_DoomMain (void)
 	
     modifiedgame = false;
 	
-    nomonsters = M_CheckParm ("-nomonsters");
-    respawnparm = M_CheckParm ("-respawn");
-    fastparm = M_CheckParm ("-fast");
-    devparm = M_CheckParm ("-devparm");
-    if (M_CheckParm ("-altdeath"))
-		deathmatch = 2;
-    else if (M_CheckParm ("-deathmatch"))
-		deathmatch = 1;
+    nomonsters = 0;
+    respawnparm = 0;
+    fastparm = 0;
+    devparm = 0;
 
-    switch ( gamemode )
-    {
-		case retail:
-	sprintf (title,
-		 "                         "
-		 "The Ultimate DOOM Startup v%i.%i"
-		 "                           ",
-		 VERSION/100,VERSION%100);
-	break;
-      case shareware:
-	sprintf (title,
-		 "                            "
-		 "DOOM Shareware Startup v%i.%i"
-		 "                           ",
-		 VERSION/100,VERSION%100);
-	break;
-      case registered:
-	sprintf (title,
-		 "                            "
-		 "DOOM Registered Startup v%i.%i"
-		 "                           ",
-		 VERSION/100,VERSION%100);
-	break;
-      case commercial:
-	sprintf (title,
-		 "                         "
-		 "DOOM 2: Hell on Earth v%i.%i"
-		 "                           ",
-		 VERSION/100,VERSION%100);
-	break;
-/*FIXME
-       case pack_plut:
-	sprintf (title,
-		 "                   "
-		 "DOOM 2: Plutonia Experiment v%i.%i"
-		 "                           ",
-		 VERSION/100,VERSION%100);
-	break;
-      case pack_tnt:
-	sprintf (title,
-		 "                     "
-		 "DOOM 2: TNT - Evilution v%i.%i"
-		 "                           ",
-		 VERSION/100,VERSION%100);
-	break;
-*/
-      default:
-	sprintf (title,
-		 "                     "
-		 "Public DOOM - v%i.%i"
-		 "                           ",
-		 VERSION/100,VERSION%100);
-	break;
-    }
-    
-    // turbo option
-    if ( (p=M_CheckParm ("-turbo")) )
-    {
-	int     scale = 200;
-	extern int forwardmove[2];
-	extern int sidemove[2];
-	
-	if (p<myargc-1)
-	    scale = atoi (myargv[p+1]);
-	if (scale < 10)
-	    scale = 10;
-	if (scale > 400)
-	    scale = 400;
-	forwardmove[0] = forwardmove[0]*scale/100;
-	forwardmove[1] = forwardmove[1]*scale/100;
-	sidemove[0] = sidemove[0]*scale/100;
-	sidemove[1] = sidemove[1]*scale/100;
-    }
     
     // add any files specified on the command line with -file wadfile
     // to the wad list
     //
     // convenience hack to allow -wart e m to add a wad file
     // prepend a tilde to the filename so wadfile will be reloadable
-    p = M_CheckParm ("-wart");
-    if (p)
-    {
-	myargv[p][4] = 'p';     // big hack, change to -warp
 
-	// Map name handling.
-	switch (gamemode )
-	{
-	  case shareware:
-	  case retail:
-	  case registered:
-	    sprintf (file,"~"DEVMAPS"E%cM%c.wad",
-		     myargv[p+1][0], myargv[p+2][0]);
-	    break;
-	    
-	  case commercial:
-	  default:
-	    p = atoi (myargv[p+1]);
-	    if (p<10)
-	      sprintf (file,"~"DEVMAPS"cdata/map0%i.wad", p);
-	    else
-	      sprintf (file,"~"DEVMAPS"cdata/map%i.wad", p);
-	    break;
-	}
-	//D_AddFile (file);
-    }
-
-/*
-    p = M_CheckParm ("-file");
-    if (p)
-    {
-	// the parms after p are wadfile/lump names,
-	// until end of parms or another - preceded parm
-	modifiedgame = true;            // homebrew levels
-	while (++p != myargc && myargv[p][0] != '-')
-	    D_AddFile (myargv[p]);
-    }
-
-    p = M_CheckParm ("-playdemo");
-
-    if (!p)
-	p = M_CheckParm ("-timedemo");
-
-    if (p && p < myargc-1)
-    {
-	sprintf (file,"%s.lmp", myargv[p+1]);
-	D_AddFile (file);
-	printf("Playing demo %s.lmp.\n",myargv[p+1]);
-    }
-*/    
     // get skill / episode / map from parms
     startskill = sk_medium;
     startepisode = 1;
@@ -695,18 +568,6 @@ void D_DoomMain (void)
     startmap = 1;
 	autostart = true;
 #else
-    p = M_CheckParm ("-warp");
-    if (p && p < myargc-1)
-    {
-	if (gamemode == commercial)
-	    startmap = atoi (myargv[p+1]);
-	else
-	{
-	    startepisode = myargv[p+1][0]-'0';
-	    startmap = myargv[p+2][0]-'0';
-	}
-	autostart = true;
-    }
 #endif
     
     // init subsystems
@@ -780,39 +641,6 @@ void D_DoomMain (void)
     ST_Init ();
 
     // check for a driver that wants intermission stats
-    p = M_CheckParm ("-statcopy");
-    if (p && p<myargc-1)
-    {
-	// for statistics driver
-	extern  void*	statcopy;                            
-
-	statcopy = (void*)atoi(myargv[p+1]);
-    }
-    
-    // start the apropriate game based on parms
-    p = M_CheckParm ("-record");
-
-    if (p && p < myargc-1)
-    {
-	G_RecordDemo (myargv[p+1]);
-	autostart = true;
-    }
-	
-    p = M_CheckParm ("-playdemo");
-    if (p && p < myargc-1)
-    {
-	singledemo = true;              // quit after one demo
-	G_DeferedPlayDemo (myargv[p+1]);
-	D_DoomLoop ();  // never returns
-    }
-	
-    p = M_CheckParm ("-timedemo");
-    if (p && p < myargc-1)
-    {
-	G_TimeDemo (myargv[p+1]);
-	D_DoomLoop ();  // never returns
-    }
-	
 
     if ( gameaction != ga_loadgame )
     {
@@ -1055,14 +883,6 @@ extern const texture_t**	textures;
 #endif
 
 		// For if we want to select a subset of maps.
-	    p = M_CheckParm ("-strikemap");
-		while( p && p < myargc-1 )
-		{
-			int ai = atoi( myargv[p+1] );
-			if( ai == -1 ) break;
-			bakemaps[ai] = "SKIP";
-			p++;
-		}		
 
 		int numvertexes_baked[BAKE_MAPS];
 		int numnodes_baked[BAKE_MAPS];

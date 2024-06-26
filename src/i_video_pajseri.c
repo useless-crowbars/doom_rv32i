@@ -2,7 +2,6 @@
 #include "doomdef.h"
 #include "doomstat.h"
 #include "i_system.h"
-#include "m_argv.h"
 #include "v_video.h"
 
 #include "./gpu.h"
@@ -44,7 +43,8 @@ void I_FinishUpdate(void)
 			int col = screenline[x];
 			int lx, ly;
 			uint32_t rgb = (lpalette[col * 3 + 0] << 0) | (lpalette[col * 3 + 1] << 8) | (lpalette[col * 3 + 2] << 16) | 0xff000000;
-			write_screen(x, SCREENHEIGHT - 1 - y, rgb);
+			write_screen(x, SCREENHEIGHT - 1 - y, rgb & 0xffffffff);
+			// BGR
 		}
 	}
 

@@ -29,7 +29,6 @@
 
 #include "z_zone.h"
 #include "f_finale.h"
-#include "m_argv.h"
 #include "m_misc.h"
 #include "m_menu.h"
 #include "m_random.h"
@@ -1391,9 +1390,6 @@ void G_RecordDemo (char* name)
     strcpy (demoname, name); 
     strcat (demoname, ".lmp"); 
     maxsize = 0x20000;
-    i = M_CheckParm ("-maxdemo");
-    if (i && i<myargc-1)
-	maxsize = atoi(myargv[i+1])*1024;
     demobuffer = Z_Malloc (maxsize,PU_STATIC,NULL); 
     demoend = demobuffer + maxsize;
 	
@@ -1481,8 +1477,8 @@ void G_DoPlayDemo (void)
 //
 void G_TimeDemo (char* name) 
 { 	 
-    nodrawers = M_CheckParm ("-nodraw"); 
-    noblit = M_CheckParm ("-noblit"); 
+    nodrawers = 0; 
+    noblit = 0; 
     timingdemo = true; 
     singletics = true; 
 

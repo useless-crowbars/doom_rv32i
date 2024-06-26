@@ -653,21 +653,11 @@ P_SetupLevel
 	else
 	{
 		// find map name
-		if ( gamemode == commercial)
-		{
-			if (map<10)
-				sprintf (lumpname,"map0%i", map);
-			else
-				sprintf (lumpname,"map%i", map);
-		}
-		else
-		{
 			lumpname[0] = 'E';
 			lumpname[1] = '0' + episode;
 			lumpname[2] = 'M';
 			lumpname[3] = '0' + map;
 			lumpname[4] = 0;
-		}
 	}
 #endif
 

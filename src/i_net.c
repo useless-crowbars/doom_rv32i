@@ -26,7 +26,6 @@
 #include "i_system.h"
 #include "d_event.h"
 #include "d_net.h"
-#include "m_argv.h"
 
 #include "doomstat.h"
 doomcom_t doomcom_data;

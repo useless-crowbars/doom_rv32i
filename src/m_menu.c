@@ -43,7 +43,6 @@
 
 #include "g_game.h"
 
-#include "m_argv.h"
 #include "m_swap.h"
 
 #include "s_sound.h"
@@ -537,10 +536,6 @@ void M_LoadSelect(int choice)
 {
     char    name[256];
 	
-    if (M_CheckParm("-cdrom"))
-	sprintf(name,"c:\\doomdata\\"SAVEGAMENAME"%d.dsg",choice);
-    else
-	sprintf(name,SAVEGAMENAME"%d.dsg",choice);
     M_ClearMenus ();
 }
 
@@ -644,7 +639,6 @@ void M_QuickSave(void)
 	quickSaveSlot = -2;	// means to pick a slot now
 	return;
     }
-    sprintf(tempstring,QSPROMPT,savegamestrings[quickSaveSlot]);
     M_StartMessage(tempstring,M_QuickSaveResponse,true);
 }
 
@@ -676,7 +670,6 @@ void M_QuickLoad(void)
 	M_StartMessage(QSAVESPOT,NULL,false);
 	return;
     }
-    sprintf(tempstring,QLPROMPT,savegamestrings[quickSaveSlot]);
     M_StartMessage(tempstring,M_QuickLoadResponse,true);
 }
 
@@ -1033,14 +1026,6 @@ void M_QuitResponse(int ch)
 
 void M_QuitDOOM(int choice)
 {
-  // We pick index 0 which is language sensitive,
-  //  or one at random, between 1 and maximum number.
-  if (language != english )
-    sprintf(endstring,"%s\n\n"DOSY, endmsg[0] );
-  else
-    sprintf(endstring,"%s\n\n"DOSY, endmsg[ (gametic%(NUM_QUITMESSAGES-2))+1 ]);
-  
-  M_StartMessage(endstring,M_QuitResponse,true);
 }
 
 

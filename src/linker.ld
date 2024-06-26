@@ -9,19 +9,34 @@ SECTIONS
     .text :
     {
         *(.text)
+        *(.text.*)
     }
 
     . = 0x100000;
+    .data :
+    {
+    	    *(.data)
+    	    *(.data.*)
+    	    *(.sdata)
+    	    *(.sdata.*)
+    }
 
-    .data : { *(.data) }
-    .sdata : { *(.sdata) }
-    .sbss : { *(.sbss) }
-    .bss : { *(.bss) }
+    . = 0x300000;
+    .bss :
+    {
+    	    *(.bss)
+    	    *(.bss.*)
+    	    *(.sbss)
+    	    *(.sbss.*)
+    }
 
     . = 0x10000000;
     .rodata :
     {
         *(.rodata)
+        *(.rodata.*)
+        *(.srodata)
+        *(.srodata.*)
     }
 
     /DISCARD/ :
@@ -35,5 +50,8 @@ SECTIONS
         *(.debug_frame)
         *(.comment)
         *(.riscv.attributes)
+        *(.symtab)
+        *(.strtab)
+        *(.shstrtab)
     }
 }

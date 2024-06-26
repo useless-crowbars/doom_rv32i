@@ -1,3 +1,5 @@
 .text
+.global _start
 _start:
-	nop
+	call main
+	fence

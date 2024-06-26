@@ -1,30 +1,10 @@
 #include "gpu.h"
+#ifndef __riscv
+
 bool end = false;
 char key_changed;
 bool key_pressed;
 bool change_ack = true;
-
-#ifdef __riscv
-void init_window()
-{
-}
-void init_screen()
-{
-}
-void write_screen(int x, int y, uint32_t color)
-{
-}
-void update_screen()
-{
-}
-void poll_keyboard()
-{
-}
-void cleanup()
-{
-}
-
-#else
 
 #include <stdio.h>
 #include <stdlib.h>
