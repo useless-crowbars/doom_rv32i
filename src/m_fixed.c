@@ -71,7 +71,8 @@ FixedDiv2
 {
 #if 1
     long long c;
-    c = ((long long)a<<16) / ((long long)b);
+    // c = ((long long)a<<16) / ((long long)b);
+    c = ((long)a) / ((long)b)<<16;
     return (fixed_t) c;
 
 #else
