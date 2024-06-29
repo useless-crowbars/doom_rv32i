@@ -166,5 +166,8 @@ void I_Error (char *error, ...)
     
     // crash
     while (1) {
+#ifdef __riscv
+	    __asm__ __volatile__ ("ecall;");
+#endif
     }
 }
