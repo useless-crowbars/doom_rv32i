@@ -139,9 +139,7 @@ void R_DrawColumn (void)
     {
 	// Re-map color indices from wall texture column
 	//  using a lighting/special effects LUT.
-#ifndef __riscv
 	*dest = dc_colormap[dc_source[(frac>>FRACBITS)&127]];
-#endif
 	
 	dest += SCREENWIDTH; 
 	frac += fracstep;
@@ -561,9 +559,7 @@ void R_DrawSpan (void)
 
 	// Lookup pixel from flat texture tile,
 	//  re-index using light/colormap.
-#ifndef __riscv
 	*dest++ = ds_colormap[ds_source[spot]];
-#endif
 
 	// Next step in u,v.
 	xfrac += ds_xstep; 

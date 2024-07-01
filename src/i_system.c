@@ -160,6 +160,9 @@ extern boolean demorecording;
 
 void I_Error (char *error, ...)
 {
+#ifdef __riscv
+	    __asm__ __volatile__ ("ecall;");
+#endif
 
     // Shutdown. Here might be other errors.
     if (demorecording)
@@ -169,8 +172,5 @@ void I_Error (char *error, ...)
     
     // crash
     while (1) {
-#ifdef __riscv
-	    __asm__ __volatile__ ("ecall;");
-#endif
     }
 }
