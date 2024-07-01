@@ -98,8 +98,11 @@ int  I_GetTime (void)
 	basetime = tp.tv_sec;
     newtics = (tp.tv_sec-basetime)*TICRATE + tp.tv_usec*TICRATE/1000000;
     return newtics;
+#else
+    static int basetime = 0;
+    basetime += TICRATE * 100;
+    return basetime;
 #endif
-    return 0;
 }
 
 
