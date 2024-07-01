@@ -60,6 +60,7 @@ void I_StartFrame()
 {
 }
 
+#ifndef __riscv
 void I_StartTic()
 {
 	if (end) {
@@ -102,3 +103,47 @@ void I_StartTic()
 		//printf("key event: %d %d\n", event.type, rc);
 	}
 }
+#else
+void I_StartTic()
+{
+	if (*end) {
+		I_ShutdownGraphics();
+	}
+
+	poll_keyboard();
+	if (!*change_ack) {
+		int rc = 0;
+
+		switch (*key_changed) {
+		case LEFT:
+			rc = KEY_LEFTARROW;
+			break;
+		case RIGHT:
+			rc = KEY_RIGHTARROW;
+			break;
+		case UP:
+			rc = KEY_UPARROW;
+			break;
+		case DOWN:
+			rc = KEY_DOWNARROW;
+			break;
+		case SPACE:
+			rc = ' ';
+			break;
+		case CTRL:
+			rc = KEY_RCTRL;
+			break;
+		default:
+			break;
+		}
+
+		event_t event;
+		event.type = *key_pressed ? ev_keydown : ev_keyup;
+		event.data1 = rc;
+		D_PostEvent(&event);
+
+		*change_ack = true;
+		//printf("key event: %d %d\n", event.type, rc);
+	}
+}
+#endif

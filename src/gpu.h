@@ -18,10 +18,17 @@ void update_screen();
 void poll_keyboard();
 void cleanup();
 
+#ifndef __riscv
 extern bool end;
 extern char key_changed;
 extern bool key_pressed;
 extern bool change_ack;
+#else
+extern bool* end;
+extern char* key_changed;
+extern bool* key_pressed;
+extern bool* change_ack;
+#endif
 
 enum KEYS {
 	LEFT,
@@ -31,5 +38,4 @@ enum KEYS {
 	SPACE,
 	CTRL,
 };
-
 #endif
