@@ -10,7 +10,7 @@
 -DPS*
 -DSS*
 -SARG*
--BAL*
++BAL*
 -DSB*
 -MAN*
 -DSP*
@@ -19,6 +19,7 @@
 -D_INTER
 -D_VICTOR
 -GENMIDI
++PUNG*
 
 -DSRLAUNC
 -DSRXPLOD
