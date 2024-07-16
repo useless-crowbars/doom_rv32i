@@ -36,15 +36,14 @@ void I_FinishUpdate(void)
 
 	static uint32_t *bmdata;
 	int y, x;
-	for (y = 0; y < SCREENHEIGHT; y++) {
+	for (y = 0; y < SCREEN_HEIGHT; y++) {
 		const uint8_t *screenline = &screens[0][y * SCREENWIDTH];
 		int xt2 = 0;
 		for (x = 0; x < SCREEN_WIDTH; x++) {
 			int col = screenline[x];
 			int lx, ly;
 			uint32_t rgb = (lpalette[col * 3 + 0] << 0) | (lpalette[col * 3 + 1] << 8) | (lpalette[col * 3 + 2] << 16) | 0xff000000;
-			write_screen(x, SCREENHEIGHT - 1 - y, rgb & 0xffffffff);
-			// BGR
+			write_screen(x / 2, y / 2, rgb);
 		}
 	}
 
