@@ -5,32 +5,32 @@ ENTRY(_start)
 
 SECTIONS
 {
-    . = 0x0;
+    . = 0x10000000;
     .text :
     {
-        *(.text)
-        *(.text.*)
+	*(.text)
+	*(.text.*)
     }
 
-    . = 0x100000;
+    . = 0x10040000;
     .data :
     {
-    	    *(.data)
-    	    *(.data.*)
-    	    *(.sdata)
-    	    *(.sdata.*)
+	*(.data)
+	*(.data.*)
+	*(.sdata)
+	*(.sdata.*)
     }
 
-    . = 0x300000;
+    . = 0x10050000;
     .bss :
     {
-    	    *(.bss)
-    	    *(.bss.*)
-    	    *(.sbss)
-    	    *(.sbss.*)
+	*(.bss)
+	*(.bss.*)
+	*(.sbss)
+	*(.sbss.*)
     }
 
-    . = 0x10000000;
+    . = 0x10150000;
     .rodata :
     {
         *(.rodata)
@@ -38,6 +38,8 @@ SECTIONS
         *(.srodata)
         *(.srodata.*)
     }
+
+    . = 0x10400000;
 
     /DISCARD/ :
     {
