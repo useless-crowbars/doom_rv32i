@@ -82,6 +82,7 @@ uint8_t kb_status = 0;
 
 void I_StartTic()
 {
+	/*
 	poll_keyboard();
 	volatile uint8_t* keyboard = (uint8_t*)KEY_ADDR;
 	uint8_t key = *keyboard;
@@ -196,4 +197,5 @@ void I_StartTic()
 		D_PostEvent(&event);
 		kb_status &= (uint8_t)~CTRL;
 	}
+	*/
 }
