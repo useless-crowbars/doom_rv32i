@@ -82,19 +82,18 @@ uint8_t kb_status = 0;
 
 void I_StartTic()
 {
-	/*
 	poll_keyboard();
 	volatile uint8_t* keyboard = (uint8_t*)KEY_ADDR;
 	uint8_t key = *keyboard;
 	if (ESC & key) {
 		event_t event;
-		event.type = ev_keyup;
+		event.type = ev_keydown;
 		event.data1 = KEY_PAUSE;
 		D_PostEvent(&event);
 		kb_status |= ESC;
 	} else if (kb_status & ESC) {
 		event_t event;
-		event.type = ev_keydown;
+		event.type = ev_keyup;
 		event.data1 = KEY_PAUSE;
 		D_PostEvent(&event);
 		kb_status &= (uint8_t)~ESC;
@@ -102,13 +101,13 @@ void I_StartTic()
 
 	if (SPACE & key) {
 		event_t event;
-		event.type = ev_keyup;
+		event.type = ev_keydown;
 		event.data1 = ' ';
 		D_PostEvent(&event);
 		kb_status |= SPACE;
 	} else if (kb_status & SPACE) {
 		event_t event;
-		event.type = ev_keydown;
+		event.type = ev_keyup;
 		event.data1 = ' ';
 		D_PostEvent(&event);
 		kb_status &= (uint8_t)~SPACE;
@@ -116,13 +115,13 @@ void I_StartTic()
 
 	if (D & key) {
 		event_t event;
-		event.type = ev_keyup;
+		event.type = ev_keydown;
 		event.data1 = KEY_RIGHTARROW;
 		D_PostEvent(&event);
 		kb_status |= D;
 	} else if (kb_status & D) {
 		event_t event;
-		event.type = ev_keydown;
+		event.type = ev_keyup;
 		event.data1 = KEY_RIGHTARROW;
 		D_PostEvent(&event);
 		kb_status &= (uint8_t)~D;
@@ -130,13 +129,13 @@ void I_StartTic()
 
 	if (S & key) {
 		event_t event;
-		event.type = ev_keyup;
+		event.type = ev_keydown;
 		event.data1 = KEY_DOWNARROW;
 		D_PostEvent(&event);
 		kb_status |= S;
 	} else if (kb_status & S) {
 		event_t event;
-		event.type = ev_keydown;
+		event.type = ev_keyup;
 		event.data1 = KEY_DOWNARROW;
 		D_PostEvent(&event);
 		kb_status &= (uint8_t)~S;
@@ -144,13 +143,13 @@ void I_StartTic()
 
 	if (A & key) {
 		event_t event;
-		event.type = ev_keyup;
+		event.type = ev_keydown;
 		event.data1 = KEY_LEFTARROW;
 		D_PostEvent(&event);
 		kb_status |= A;
 	} else if (kb_status & A) {
 		event_t event;
-		event.type = ev_keydown;
+		event.type = ev_keyup;
 		event.data1 = KEY_LEFTARROW;
 		D_PostEvent(&event);
 		kb_status &= (uint8_t)~A;
@@ -158,13 +157,13 @@ void I_StartTic()
 
 	if (W & key) {
 		event_t event;
-		event.type = ev_keyup;
+		event.type = ev_keydown;
 		event.data1 = KEY_UPARROW;
 		D_PostEvent(&event);
 		kb_status |= W;
 	} else if (kb_status & W) {
 		event_t event;
-		event.type = ev_keydown;
+		event.type = ev_keyup;
 		event.data1 = KEY_UPARROW;
 		D_PostEvent(&event);
 		kb_status &= (uint8_t)~W;
@@ -172,13 +171,13 @@ void I_StartTic()
 
 	if (SHIFT & key) {
 		event_t event;
-		event.type = ev_keyup;
+		event.type = ev_keydown;
 		event.data1 = KEY_PAUSE;
 		D_PostEvent(&event);
 		kb_status |= SHIFT;
 	} else if (kb_status & SHIFT) {
 		event_t event;
-		event.type = ev_keydown;
+		event.type = ev_keyup;
 		event.data1 = KEY_PAUSE;
 		D_PostEvent(&event);
 		kb_status &= (uint8_t)~SHIFT;
@@ -186,16 +185,16 @@ void I_StartTic()
 
 	if (CTRL & key) {
 		event_t event;
-		event.type = ev_keyup;
+		event.type = ev_keydown;
 		event.data1 = KEY_RCTRL;
 		D_PostEvent(&event);
 		kb_status |= CTRL;
 	} else if (kb_status & CTRL) {
 		event_t event;
-		event.type = ev_keydown;
+		event.type = ev_keyup;
 		event.data1 = KEY_RCTRL;
 		D_PostEvent(&event);
 		kb_status &= (uint8_t)~CTRL;
 	}
-	*/
+	
 }

@@ -44,6 +44,7 @@ cht_CheckCheat
 ( cheatseq_t*	cht,
   char		key )
 {
+	return 0;
     int i;
     int rc = 0;
 

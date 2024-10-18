@@ -105,6 +105,7 @@ P_RecursiveSound
 ( sector_t*	sec,
   int		soundblocks )
 {
+	return;
     int		i;
     line_t*	check;
     sector_t*	other;
@@ -158,6 +159,7 @@ P_NoiseAlert
 ( mobj_t*	target,
   mobj_t*	emmiter )
 {
+	return;
     soundtarget = target;
     validcount++;
     P_RecursiveSound (emmiter->subsector->sector, 0);
