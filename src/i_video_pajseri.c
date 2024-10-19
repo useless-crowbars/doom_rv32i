@@ -27,28 +27,15 @@ void I_UpdateNoBlit(void)
 {
 }
 
-int dx[4] = {0, 0, 1, 1};
-int dy[4] = {0, 1, 0, 1};
-
 void I_FinishUpdate(void)
 {
 	int y, x;
 	for (y = 0; y < SCREEN_HEIGHT; y += 2) {
 		for (x = 0; x < SCREEN_WIDTH; x += 2) {
-			uint32_t b = 0;
-			uint32_t g = 0;
-			uint32_t r = 0;
-
-			for (int k = 0; k < 4; k++) {
-				uint8_t col = ((uint8_t*)&screens[0][(y + dy[k]) * SCREENWIDTH])[x + dx[k]];
-				b += lpalette[col * 3 + 2];
-				g += lpalette[col * 3 + 1];
-				r += lpalette[col * 3 + 0];
-
-			}
-			b /= 4;
-			g /= 4;
-			r /= 4;
+			uint8_t col = ((uint8_t*)&screens[0][y * SCREENWIDTH])[x];
+			uint32_t b = lpalette[col * 3 + 2];
+			uint32_t g = lpalette[col * 3 + 1];
+			uint32_t r = lpalette[col * 3 + 0];
 
 			uint32_t bgr = 0xff000000 | (b << 16) | (g << 8) | r;
 
