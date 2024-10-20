@@ -331,6 +331,7 @@ R_CheckPlane
 //
 // R_MakeSpans
 //
+__attribute__((section(".critical")))
 void
 R_MakeSpans
 ( int		x,
@@ -368,6 +369,7 @@ R_MakeSpans
 // R_DrawPlanes
 // At the end of each frame.
 //
+__attribute__((section(".critical")))
 void R_DrawPlanes (void)
 {
     visplane_t*		pl;

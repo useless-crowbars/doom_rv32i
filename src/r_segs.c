@@ -198,6 +198,7 @@ R_RenderMaskedSegRange
 #define HEIGHTBITS		12
 #define HEIGHTUNIT		(1<<HEIGHTBITS)
 
+__attribute__((section(".critical")))
 void R_RenderSegLoop (void)
 {
     angle_t		angle;

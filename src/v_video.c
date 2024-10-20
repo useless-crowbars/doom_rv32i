@@ -200,6 +200,8 @@ V_CopyRect
 // V_DrawPatch
 // Masks a column based masked pic to the screen. 
 //
+
+__attribute__((section(".critical")))
 void
 V_DrawPatch
 ( int		x,

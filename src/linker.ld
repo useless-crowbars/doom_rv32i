@@ -12,6 +12,12 @@ SECTIONS
 	*(.text.*)
     }
 
+    . = 0x10030000;
+    .text : 
+    {
+        *(.critical)
+    }
+
     . = 0x10040000;
     .data :
     {

@@ -46,6 +46,7 @@ void init_screen()
 	}
 }
 
+__attribute__((section(".critical")))
 void write_screen(int x, int y, uint32_t color)
 {
 	if (x < 0 || x >= SCREEN_WIDTH || y < 0 || y >= SCREEN_HEIGHT) {

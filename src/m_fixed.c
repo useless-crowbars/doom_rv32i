@@ -38,6 +38,7 @@
 
 // Fixme. __USE_C_FIXED__ or something.
 
+__attribute__((section(".critical")))
 fixed_t
 FixedMul
 ( fixed_t	a,
@@ -63,7 +64,7 @@ FixedDiv
 }
 
 #include <stdint.h>
-uint32_t __attribute__((weak)) __div64_32(uint64_t *n, uint32_t base)
+uint32_t __attribute__((weak, section(".critical"))) __div64_32(uint64_t *n, uint32_t base)
 {
 	uint64_t rem = *n;
 	uint64_t b = base;

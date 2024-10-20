@@ -27,6 +27,7 @@ void I_UpdateNoBlit(void)
 {
 }
 
+__attribute__((section(".critical")))
 void I_FinishUpdate(void)
 {
 	int y, x;
