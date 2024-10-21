@@ -6,7 +6,7 @@
 
 #include "./gpu.h"
 
-static byte lpalette[256 * 3];
+static byte *lpalette;
 
 void I_InitGraphics(void)
 {
@@ -20,7 +20,7 @@ void I_ShutdownGraphics(void)
 
 void I_SetPalette(byte *palette)
 {
-	memcpy(lpalette, palette, sizeof(lpalette));
+	lpalette = palette;
 }
 
 void I_UpdateNoBlit(void)
