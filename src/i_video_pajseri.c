@@ -6,7 +6,11 @@
 
 #include "./gpu.h"
 
-static byte *lpalette;
+#ifdef __riscv
+static byte* lpalette = (byte*) 0x10032000;
+#else
+static byte lpalette[256 * 3];
+#endif
 
 void I_InitGraphics(void)
 {
@@ -20,7 +24,7 @@ void I_ShutdownGraphics(void)
 
 void I_SetPalette(byte *palette)
 {
-	lpalette = palette;
+	memcpy(lpalette, palette, 256 * 3 * sizeof(byte));
 }
 
 void I_UpdateNoBlit(void)
@@ -46,7 +50,6 @@ void I_FinishUpdate(void)
 
 	update_screen();
 }
-
 void I_ReadScreen(byte *scr)
 {
 	memcpy(scr, screens[0], SCREENWIDTH * SCREENHEIGHT);
