@@ -12,6 +12,8 @@ static byte* lpalette = (byte*) 0x10032000;
 static byte lpalette[256 * 3];
 #endif
 
+#define GPU_ADDR 0x20000000
+
 void I_InitGraphics(void)
 {
 	init_screen();
@@ -34,22 +36,22 @@ void I_UpdateNoBlit(void)
 __attribute__((section(".critical")))
 void I_FinishUpdate(void)
 {
+	uint8_t *gpu = (uint8_t *)GPU_ADDR;
 	int y, x;
 	for (y = 0; y < SCREEN_HEIGHT; y += 2) {
 		for (x = 0; x < SCREEN_WIDTH; x += 2) {
 			uint8_t col = ((uint8_t*)&screens[0][y * SCREENWIDTH])[x];
-			uint32_t b = lpalette[col * 3 + 2];
-			uint32_t g = lpalette[col * 3 + 1];
-			uint32_t r = lpalette[col * 3 + 0];
+			uint8_t b = (lpalette[col * 3 + 2] & 0xc0);
+			uint8_t g = (lpalette[col * 3 + 1] & 0xe0) >> 2;
+			uint8_t r = (lpalette[col * 3 + 0] & 0xe0) >> 5;
 
-			uint32_t bgr = 0xff000000 | (b << 16) | (g << 8) | r;
-
-			write_screen(x / 2, y / 2, bgr);
+			gpu[y / 2 * 160 + x / 2] = b | g | r;
 		}
 	}
 
 	update_screen();
 }
+
 void I_ReadScreen(byte *scr)
 {
 	memcpy(scr, screens[0], SCREENWIDTH * SCREENHEIGHT);
