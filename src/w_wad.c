@@ -304,6 +304,7 @@ void W_ReadLump( int lump, void* dest )
 //
 // W_CacheLumpNum
 //
+__attribute__((section(".critical")))
 const void*
 W_CacheLumpNum
 ( int				lump,

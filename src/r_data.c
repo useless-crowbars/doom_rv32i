@@ -335,6 +335,7 @@ void R_GenerateLookup (int texnum)
 //
 // R_GetColumn
 //
+__attribute__((section(".critical")))
 byte* R_GetColumn( int tex, int col )
 {
 	int				lump;

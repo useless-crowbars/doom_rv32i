@@ -98,6 +98,7 @@ void P_AllocateThinker (thinker_t*	thinker)
 //
 // P_RunThinkers
 //
+__attribute__((section(".critical")))
 void P_RunThinkers (void)
 {
     thinker_t*	currentthinker;

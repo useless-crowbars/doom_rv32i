@@ -412,6 +412,7 @@ P_NightmareRespawn (mobj_t* mobj)
 //
 // P_MobjThinker
 //
+__attribute__((section(".critical")))
 void P_MobjThinker (mobj_t* mobj)
 {
     // momentum movement
