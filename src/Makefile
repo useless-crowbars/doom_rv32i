@@ -23,7 +23,7 @@ LIBS?=-lglfw -lGL
 CFLAGS_HOST?=-m32 $(IGNORE_WARNINGS) $(EXTRA_CFLAGS)
 LDFLAGS_HOST?=-L/usr/X11R6/lib
 LIBS_HOST?=-lglfw -lGL
-CS?=i_video_pajseri.c gpu.c ../../emu_rv32i/stdlib/*.c
+CS?=i_video_pajseri.c ../../emu_rv32i/stdlib/*.c
 
 
 # If you want to reduce printf junk

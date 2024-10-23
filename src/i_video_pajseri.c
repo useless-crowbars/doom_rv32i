@@ -4,8 +4,6 @@
 #include "i_system.h"
 #include "v_video.h"
 
-#include "./gpu.h"
-
 #ifdef __riscv
 static byte* lpalette = (byte*) 0x10032000;
 #else
@@ -13,15 +11,15 @@ static byte lpalette[256 * 3];
 #endif
 
 #define GPU_ADDR 0x20000000
+#define SCREEN_WIDTH 320
+#define SCREEN_HEIGHT 200
 
 void I_InitGraphics(void)
 {
-	init_screen();
 }
 
 void I_ShutdownGraphics(void)
 {
-	cleanup();
 }
 
 void I_SetPalette(byte *palette)
@@ -48,8 +46,6 @@ void I_FinishUpdate(void)
 			gpu[y / 2 * 160 + x / 2] = b | g | r;
 		}
 	}
-
-	update_screen();
 }
 
 void I_ReadScreen(byte *scr)
@@ -75,7 +71,6 @@ uint8_t kb_status = 0;
 
 void I_StartTic()
 {
-	poll_keyboard();
 	volatile uint8_t* keyboard = (uint8_t*)KEY_ADDR;
 	uint8_t key = *keyboard;
 	if (ESC & key) {
@@ -189,5 +184,4 @@ void I_StartTic()
 		D_PostEvent(&event);
 		kb_status &= (uint8_t)~CTRL;
 	}
-	
 }
