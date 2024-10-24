@@ -212,8 +212,6 @@ void V_DrawPatch(int x, int y, int scrn, patch_t* patch) {
     y -= SHORT(patch->topoffset);
     x -= SHORT(patch->leftoffset);
 
-	if(y == 0) y = 168;
-
     byte* framebuffer = (byte*)0x20000000;
     byte* palette = (byte*) 0x10032000;
 
