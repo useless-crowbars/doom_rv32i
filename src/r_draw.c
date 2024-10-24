@@ -103,6 +103,40 @@ int			dccount;
 //  be used. It has also been used with Wolfenstein 3D.
 // 
 __attribute__((section(".critical")))
+void R_DrawColumn(void)
+{
+    int         count;
+    byte*       dest;
+    fixed_t     frac;
+    fixed_t     fracstep;
+
+    count = dc_yh - dc_yl;
+    if (count < 0) return;
+
+#ifdef RANGECHECK
+    if ((unsigned)dc_x >= SCREENWIDTH
+        || dc_yl < 0
+        || dc_yh >= SCREENHEIGHT)
+        I_Error("R_DrawColumn: %i to %i at %i", dc_yl, dc_yh, dc_x);
+#endif
+    byte* framebuffer = (byte*)0x20000000;
+	byte* lpalette = (byte*) 0x10032000;
+    fracstep = dc_iscale;
+    frac = dc_texturemid + (dc_yl - centery) * fracstep;
+    int new_y = dc_yl / 2;
+    do {
+        if (dc_yl % 2 == 0) {
+			byte col = dc_colormap[dc_source[(frac >> FRACBITS) & 127]];
+			int new_x = dc_x / 2;
+			framebuffer[new_y * 160 + new_x] = lpalette[col];
+		}
+		dc_yl++;
+		new_y = dc_yl / 2;
+		frac += fracstep;
+	} while (count--);
+}
+
+/*
 void R_DrawColumn (void) 
 { 
     int			count; 
@@ -147,7 +181,7 @@ void R_DrawColumn (void)
 	
     } while (count--); 
 } 
-
+*/
 
 
 // UNUSED.
@@ -525,6 +559,45 @@ int			dscount;
 //
 // Draws the actual span.
 __attribute__((section(".critical")))
+void R_DrawSpan(void)
+{
+	fixed_t     xfrac;
+	fixed_t     yfrac;
+	int         count;
+	int         spot;
+
+#ifdef RANGECHECK
+	if (ds_x2 < ds_x1
+			|| ds_x1 < 0
+			|| ds_x2 >= SCREENWIDTH
+			|| (unsigned)ds_y > SCREENHEIGHT)
+	{
+		I_Error("R_DrawSpan: %i to %i at %i", ds_x1, ds_x2, ds_y);
+	}
+#endif
+	xfrac = ds_xfrac;
+	yfrac = ds_yfrac;
+	count = ds_x2 - ds_x1;
+
+	int new_y = ds_y / 2;
+
+	byte* framebuffer = (byte*)0x20000000;
+	byte* lpalette = (byte*) 0x10032000;
+	do {
+		if (ds_x1 % 2 == 0) {
+			spot = ((yfrac >> (16 - 6)) & (63 * 64)) + ((xfrac >> 16) & 63);
+			byte col = ds_colormap[ds_source[spot]];
+
+			int new_x = ds_x1 / 2;
+			framebuffer[new_y * 160 + new_x] = lpalette[col]; 
+		}
+		xfrac += ds_xstep;
+		yfrac += ds_ystep;
+		ds_x1++;
+	} while (count--);
+}
+
+/*
 void R_DrawSpan (void) 
 { 
     fixed_t		xfrac;
@@ -569,7 +642,7 @@ void R_DrawSpan (void)
 	
     } while (count--); 
 } 
-
+*/
 
 
 // UNUSED.

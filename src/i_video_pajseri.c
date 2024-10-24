@@ -11,8 +11,6 @@ static byte lpalette[256 * 3];
 #endif
 
 #define GPU_ADDR 0x20000000
-#define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 200
 
 void I_InitGraphics(void)
 {
@@ -24,7 +22,12 @@ void I_ShutdownGraphics(void)
 
 void I_SetPalette(byte *palette)
 {
-	memcpy(lpalette, palette, 256 * 3 * sizeof(byte));
+	for(int i = 0; i < 256; i++) {
+		uint8_t b = (palette[i * 3 + 2] & 0xc0);
+		uint8_t g = (palette[i * 3 + 1] & 0xe0) >> 2;
+		uint8_t r = (palette[i * 3 + 0] & 0xe0) >> 5;
+		lpalette[i] = b | g | r; 
+	}
 }
 
 void I_UpdateNoBlit(void)
@@ -34,18 +37,7 @@ void I_UpdateNoBlit(void)
 __attribute__((section(".critical")))
 void I_FinishUpdate(void)
 {
-	uint8_t *gpu = (uint8_t *)GPU_ADDR;
-	int y, x;
-	for (y = 0; y < SCREEN_HEIGHT; y += 2) {
-		for (x = 0; x < SCREEN_WIDTH; x += 2) {
-			uint8_t col = ((uint8_t*)&screens[0][y * SCREENWIDTH])[x];
-			uint8_t b = (lpalette[col * 3 + 2] & 0xc0);
-			uint8_t g = (lpalette[col * 3 + 1] & 0xe0) >> 2;
-			uint8_t r = (lpalette[col * 3 + 0] & 0xe0) >> 5;
-
-			gpu[y / 2 * 160 + x / 2] = b | g | r;
-		}
-	}
+	// TODO: switch buffers
 }
 
 void I_StartFrame()

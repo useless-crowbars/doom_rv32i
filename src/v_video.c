@@ -202,6 +202,52 @@ V_CopyRect
 //
 
 __attribute__((section(".critical")))
+void V_DrawPatch(int x, int y, int scrn, patch_t* patch) {
+    int         count;
+    int         col;
+    column_t*   column;
+    byte*       source;
+    int         w;
+
+    y -= SHORT(patch->topoffset);
+    x -= SHORT(patch->leftoffset);
+
+	if(y == 0) y = 168;
+
+    byte* framebuffer = (byte*)0x20000000;
+    byte* palette = (byte*) 0x10032000;
+
+    col = 0;
+    w = SHORT(patch->width);
+
+    for (; col < w; x++, col++) {
+        if (x % 2 != 0)
+            continue;
+
+        int scaled_x = x / 2;
+
+        column = (column_t*)((byte*)patch + LONG(patch->columnofs[col]));
+
+        while (column->topdelta != 0xff) {
+            source = (byte*)column + 3;
+            int scaled_y = (y + column->topdelta) / 2;
+
+            byte* dest = framebuffer + scaled_y * 160 + scaled_x;
+
+            count = column->length / 2;
+
+            while (count--) {
+                *dest = palette[*source];
+                dest += 160;
+				source += 2;
+            }
+
+            column = (column_t*)((byte*)column + column->length + 4);
+        }
+    }
+}
+
+/*
 void
 V_DrawPatch
 ( int		x,
@@ -260,7 +306,7 @@ V_DrawPatch
 	} 
     }			 
 } 
- 
+ */
 //
 // V_DrawPatchFlipped 
 // Masks a column based masked pic to the screen.
