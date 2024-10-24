@@ -2,24 +2,25 @@
 # Use this command to do E1M1Only. 
 # make clean && cp support/stripchoice-E1M1ONLY.txt support/stripchoice.txt && cp support/stripchoice-E1M1ONLY.txt support/stripchoicebegin.txt && EXTRA_CFLAGS="-DE1M1ONLY=1" make && ls -l emdoom
 
--BOSS*
--MIS*
--SOUL*
--TRE*
--SPOS*
--DPS*
--DSS*
--SARG*
++BOSS*
++MIS*
++SOUL*
++TRE*
++SPOS*
++DPS*
++DSS*
++SARG*
 +BAL*
--DSB*
--MAN*
--DSP*
--DSTELEPT
--D_E1*
--D_INTER
--D_VICTOR
--GENMIDI
++DSB*
++MAN*
++DSP*
++DSTELEPT
++D_E1*
++D_INTER
++D_VICTOR
++GENMIDI
 +PUNG*
++SHT*
 
 -DSRLAUNC
 -DSRXPLOD
@@ -66,4 +67,3 @@
 +CHG*
 +PISG*
 +BON2*
-

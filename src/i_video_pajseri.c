@@ -48,11 +48,6 @@ void I_FinishUpdate(void)
 	}
 }
 
-void I_ReadScreen(byte *scr)
-{
-	memcpy(scr, screens[0], SCREENWIDTH * SCREENHEIGHT);
-}
-
 void I_StartFrame()
 {
 }

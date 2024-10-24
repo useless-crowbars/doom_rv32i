@@ -45,7 +45,7 @@ SECTIONS
         *(.srodata.*)
     }
 
-    . = 0x10400000;
+    . = 0x40000000;
 
     /DISCARD/ :
     {
