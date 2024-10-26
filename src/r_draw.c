@@ -123,18 +123,19 @@ void R_DrawColumn(void)
 	fracstep = dc_iscale;
 	frac = dc_texturemid + (dc_yl - centery) * fracstep;
 	count = (count + 1) / 2;
+	fracstep *= 2;
 
+	int new_x = dc_x >> 1;
 	int new_y = dc_yl >> 1;
-	int gpu_index_base = new_y * 160 + (dc_x >> 1);
+	int gpu_index_base = new_y * 160 + new_x;
 
 	do {
     	byte col = dc_colormap[dc_source[(frac >> FRACBITS) & 127]];
 	    gpu[gpu_index_base] = lpalette[col];
 
-    	dc_yl += 2;
-    	new_y = dc_yl >> 1;
-    	gpu_index_base = new_y * 160 + (dc_x >> 1);
-    	frac += fracstep * 2;
+    	new_y++;
+    	gpu_index_base = new_y * 160 + new_x;
+    	frac += fracstep;
 	} while (count--);
 }
 
@@ -581,6 +582,8 @@ void R_DrawSpan(void)
 	yfrac = ds_yfrac;
 	count = (ds_x2 - ds_x1) / 2;
 
+	int xinc =  ds_xstep * 2;
+	int yinc =  ds_ystep * 2;
 	int new_y = ds_y >> 1;
 
 	int gpu_index = new_y * 160 + (ds_x1 >> 1);
@@ -590,8 +593,8 @@ void R_DrawSpan(void)
     	byte col = ds_colormap[ds_source[spot]];
     	gpu[gpu_index++] = lpalette[col];
 
-    	xfrac += ds_xstep * 2;
-    	yfrac += ds_ystep * 2;
+    	xfrac += xinc;
+    	yfrac += yinc;
 	} while (count--);
 }
 
