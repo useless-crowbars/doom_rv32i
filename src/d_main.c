@@ -180,7 +180,7 @@ void R_ExecuteSetViewSize (void);
 
 void D_Display (void)
 {
-    static  boolean		viewactivestate = false;
+/*    static  boolean		viewactivestate = false;
     static  boolean		menuactivestate = false;
     static  boolean		inhelpscreensstate = false;
     static  boolean		fullscreen = false;
@@ -198,37 +198,37 @@ void D_Display (void)
 	return;                    // for comparative timing / profiling
 		
     redrawsbar = false;
-    
+  */  
     // change the view size if needed
     if (setsizeneeded)
     {
 	R_ExecuteSetViewSize ();
-	oldgamestate = -1;                      // force background redraw
-	borderdrawcount = 3;
+//	oldgamestate = -1;                      // force background redraw
+//	borderdrawcount = 3;
     }
 
     // save the current screen if about to wipe
-    if (gamestate != wipegamestate)
+    /*if (gamestate != wipegamestate)
     {
 	wipe = true;
 	wipe_StartScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
     }
     else
-	wipe = false;
+	wipe = false;*/
 
-    if (gamestate == GS_LEVEL && gametic)
-	HU_Erase();
+    //if (gamestate == GS_LEVEL && gametic)
+	//HU_Erase();
     
     // do buffered drawing
-    switch (gamestate)
+    /*switch (gamestate)
     {
       case GS_LEVEL:
 	if (!gametic)
-	    break;
+	    //break;
 	if (automapactive)
-	    AM_Drawer ();
+	    //AM_Drawer ();
 	if (wipe || (viewheight != 200 && fullscreen) )
-	    redrawsbar = true;
+	    //redrawsbar = true;
 	if (inhelpscreensstate && !inhelpscreens)
 	    redrawsbar = true;              // just put away the help screen
 	ST_Drawer (viewheight == 200, redrawsbar );
@@ -236,27 +236,30 @@ void D_Display (void)
 	break;
 
       case GS_INTERMISSION:
-	WI_Drawer ();
+	//WI_Drawer ();
 	break;
 
       case GS_FINALE:
-	F_Drawer ();
+	//F_Drawer ();
 	break;
 
       case GS_DEMOSCREEN:
-	D_PageDrawer ();
+	//D_PageDrawer ();
 	break;
-    }
+    }*/
+
     
     // draw buffered stuff to screen
     I_UpdateNoBlit ();
     
     // draw the view directly
-    if (gamestate == GS_LEVEL && !automapactive && gametic)
-	R_RenderPlayerView (&players[displayplayer]);
+    if (gamestate == GS_LEVEL && !automapactive && gametic) {
+		R_RenderPlayerView (&players[displayplayer]);
+	}
 
-    if (gamestate == GS_LEVEL && gametic)
-	HU_Drawer ();
+	ST_Drawer (viewheight == 200, 0 );
+/*    if (gamestate == GS_LEVEL && gametic)
+	{HU_Drawer ();}
     
     // clean up border stuff
     if (gamestate != oldgamestate && gamestate != GS_LEVEL)
@@ -300,21 +303,21 @@ void D_Display (void)
 
 
     // menus go directly to the screen
-    M_Drawer ();          // menu is drawn even on top of everything
-    NetUpdate ();         // send out any new accumulation
+    //M_Drawer ();          // menu is drawn even on top of everything
+    //NetUpdate ();         // send out any new accumulation
 
 
     // normal update
     if (!wipe)
     {
-	I_FinishUpdate ();              // page flip or blit buffer
+	//I_FinishUpdate ();              // page flip or blit buffer
 	return;
     }
     
     // wipe update
-    wipe_EndScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
+    //wipe_EndScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
 
-    wipestart = I_GetTime () - 1;
+    //wipestart = I_GetTime () - 1;
 
     do
     {
@@ -326,10 +329,10 @@ void D_Display (void)
 	wipestart = nowtime;
 	done = wipe_ScreenWipe(wipe_Melt
 			       , 0, 0, SCREENWIDTH, SCREENHEIGHT, tics);
-	I_UpdateNoBlit ();
+	//I_UpdateNoBlit ();
 	M_Drawer ();                            // menu is drawn even on top of wipes
-	I_FinishUpdate ();                      // page flip or blit buffer
-    } while (!done);
+	//I_FinishUpdate ();                      // page flip or blit buffer
+    } while (!done);*/
 }
 
 
@@ -369,10 +372,11 @@ void D_DoomLoop (void)
 	    TryRunTics (); // will run at least one tic
 	}
 		
-	S_UpdateSounds (players[consoleplayer].mo);// move positional sounds
+	//S_UpdateSounds (players[consoleplayer].mo);// move positional sounds
 
 	// Update display, next frame, with current state.
 	D_Display ();
+	I_FinishUpdate ();              // page flip or blit buffer
 
 #ifndef SNDSERV
 	// Sound mixing for the buffer is snychronous.

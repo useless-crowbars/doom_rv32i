@@ -3,14 +3,19 @@
 #include "doomstat.h"
 #include "i_system.h"
 #include "v_video.h"
+#include "i_video_pajseri.h"
 
 #ifdef __riscv
-static byte* lpalette = (byte*) 0x10032000;
+byte* lpalette = (byte*) 0x10032000;
 #else
-static byte lpalette[256 * 3];
+byte lpalette[256 * 3];
 #endif
 
-#define GPU_ADDR 0x20000000
+#define GPU_ADDR1 0x20000000
+#define GPU_ADDR2 0x20004000
+
+static byte* buffer = (byte*)0x10031fff;
+byte* gpu = (byte*)GPU_ADDR1;
 
 void I_InitGraphics(void)
 {
@@ -34,10 +39,10 @@ void I_UpdateNoBlit(void)
 {
 }
 
-__attribute__((section(".critical")))
 void I_FinishUpdate(void)
 {
-	// TODO: switch buffers
+	*buffer = *buffer ? (byte)0 : (byte)1;
+	gpu = *buffer ? (byte*)GPU_ADDR2 : (byte*)GPU_ADDR1;
 }
 
 void I_StartFrame()

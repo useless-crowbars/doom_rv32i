@@ -42,6 +42,7 @@
 // State.
 #include "doomstat.h"
 
+#include "i_video_pajseri.h"
 
 // ?
 #define MAXWIDTH			1120
@@ -119,20 +120,21 @@ void R_DrawColumn(void)
         || dc_yh >= SCREENHEIGHT)
         I_Error("R_DrawColumn: %i to %i at %i", dc_yl, dc_yh, dc_x);
 #endif
-    byte* framebuffer = (byte*)0x20000000;
-	byte* lpalette = (byte*) 0x10032000;
-    fracstep = dc_iscale;
-    frac = dc_texturemid + (dc_yl - centery) * fracstep;
-    int new_y = dc_yl / 2;
-    do {
-        if (dc_yl % 2 == 0) {
-			byte col = dc_colormap[dc_source[(frac >> FRACBITS) & 127]];
-			int new_x = dc_x / 2;
-			framebuffer[new_y * 160 + new_x] = lpalette[col];
-		}
-		dc_yl++;
-		new_y = dc_yl / 2;
-		frac += fracstep;
+	fracstep = dc_iscale;
+	frac = dc_texturemid + (dc_yl - centery) * fracstep;
+	count = (count + 1) / 2;
+
+	int new_y = dc_yl >> 1;
+	int gpu_index_base = new_y * 160 + (dc_x >> 1);
+
+	do {
+    	byte col = dc_colormap[dc_source[(frac >> FRACBITS) & 127]];
+	    gpu[gpu_index_base] = lpalette[col];
+
+    	dc_yl += 2;
+    	new_y = dc_yl >> 1;
+    	gpu_index_base = new_y * 160 + (dc_x >> 1);
+    	frac += fracstep * 2;
 	} while (count--);
 }
 
@@ -577,23 +579,19 @@ void R_DrawSpan(void)
 #endif
 	xfrac = ds_xfrac;
 	yfrac = ds_yfrac;
-	count = ds_x2 - ds_x1;
+	count = (ds_x2 - ds_x1) / 2;
 
-	int new_y = ds_y / 2;
+	int new_y = ds_y >> 1;
 
-	byte* framebuffer = (byte*)0x20000000;
-	byte* lpalette = (byte*) 0x10032000;
+	int gpu_index = new_y * 160 + (ds_x1 >> 1);
+
 	do {
-		if (ds_x1 % 2 == 0) {
-			spot = ((yfrac >> (16 - 6)) & (63 * 64)) + ((xfrac >> 16) & 63);
-			byte col = ds_colormap[ds_source[spot]];
+    	int spot = ((yfrac >> (16 - 6)) & (63 * 64)) + ((xfrac >> 16) & 63);
+    	byte col = ds_colormap[ds_source[spot]];
+    	gpu[gpu_index++] = lpalette[col];
 
-			int new_x = ds_x1 / 2;
-			framebuffer[new_y * 160 + new_x] = lpalette[col]; 
-		}
-		xfrac += ds_xstep;
-		yfrac += ds_ystep;
-		ds_x1++;
+    	xfrac += ds_xstep * 2;
+    	yfrac += ds_ystep * 2;
 	} while (count--);
 }
 

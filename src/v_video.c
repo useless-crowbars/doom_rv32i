@@ -39,6 +39,7 @@ rcsid[] = "$Id: v_video.c,v 1.5 1997/02/03 22:45:13 b1 Exp $";
 
 #include "v_video.h"
 
+#include "i_video_pajseri.h"
 
 // Each screen is [SCREENWIDTH*SCREENHEIGHT]; 
 byte*				screens[5];	
@@ -212,9 +213,6 @@ void V_DrawPatch(int x, int y, int scrn, patch_t* patch) {
     y -= SHORT(patch->topoffset);
     x -= SHORT(patch->leftoffset);
 
-    byte* framebuffer = (byte*)0x20000000;
-    byte* palette = (byte*) 0x10032000;
-
     col = 0;
     w = SHORT(patch->width);
 
@@ -230,12 +228,12 @@ void V_DrawPatch(int x, int y, int scrn, patch_t* patch) {
             source = (byte*)column + 3;
             int scaled_y = (y + column->topdelta) / 2;
 
-            byte* dest = framebuffer + scaled_y * 160 + scaled_x;
+            byte* dest = gpu + scaled_y * 160 + scaled_x;
 
             count = column->length / 2;
 
             while (count--) {
-                *dest = palette[*source];
+                *dest = lpalette[*source];
                 dest += 160;
 				source += 2;
             }
