@@ -809,6 +809,7 @@ R_InitBuffer
 //
 void R_FillBackScreen (void) 
 { 
+	return;
     byte*	src;
     byte*	dest; 
     int		x;

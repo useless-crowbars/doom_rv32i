@@ -385,7 +385,7 @@ void R_DrawMaskedColumn (column_t* column)
 
 			// Drawn by either R_DrawColumn
 			//  or (SHADOW) R_DrawFuzzColumn.
-			colfunc ();		
+			colfunc ();
 		}
 		column = (column_t *)(  (byte *)column + column->length + 4);
 	}
@@ -409,7 +409,6 @@ R_DrawVisSprite
 	int						texturecolumn;
 	fixed_t				frac;
 	patch_t*				patch;
-		
 		
 	patch = W_CacheLumpNum (vis->patch+firstspritelump, PU_CACHE);
 
@@ -987,8 +986,8 @@ void R_DrawMasked (void)
 	
 	// draw the psprites on top of everything
 	//  but does not draw on side views
-	if (!viewangleoffset)				
-		R_DrawPlayerSprites ();
+	//if (!viewangleoffset)				
+	R_DrawPlayerSprites ();
 }
 
 

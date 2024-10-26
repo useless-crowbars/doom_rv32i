@@ -316,6 +316,7 @@ wipe_ScreenWipe
   int	height,
   int	ticks )
 {
+	return 1;
 	//Normally, this would actually do a wipe effect. Ditched for size.
 	memcpy( screens[0], wipe_scr_end, width*height );
 	return 1;

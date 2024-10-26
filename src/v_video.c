@@ -166,6 +166,7 @@ V_CopyRect
   int		desty,
   int		destscrn ) 
 { 
+	return;
     byte*	src;
     byte*	dest; 
 	 
@@ -450,6 +451,7 @@ V_DrawBlock
   int		height,
   byte*		src ) 
 { 
+	return;
     byte*	dest; 
 	 
 #ifdef RANGECHECK 
@@ -490,6 +492,7 @@ V_GetBlock
   int		height,
   byte*		dest ) 
 { 
+	return;
     byte*	src; 
 	 
 #ifdef RANGECHECK 
@@ -529,7 +532,7 @@ void V_Init (void)
 #ifdef COMBINE_SCREENS
     base = 	I_AllocLow(SCREENWIDTH*SCREENHEIGHT);
     for (i=0 ; i<4 ; i++)
-	screens[i] = base;// + i*SCREENWIDTH*SCREENHEIGHT;
+	screens[i] = NULL;//base;// + i*SCREENWIDTH*SCREENHEIGHT;
 #else
     base = I_AllocLow (SCREENWIDTH*SCREENHEIGHT*4);
     for (i=0 ; i<4 ; i++)

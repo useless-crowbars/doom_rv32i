@@ -258,6 +258,7 @@ void D_Display (void)
 	}
 
 	ST_Drawer (viewheight == 200, 0 );
+	//R_DrawMasked();
 /*    if (gamestate == GS_LEVEL && gametic)
 	{HU_Drawer ();}
     
