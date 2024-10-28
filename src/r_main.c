@@ -700,22 +700,22 @@ void R_ExecuteSetViewSize (void)
     centeryfrac = centery<<FRACBITS;
     projection = centerxfrac;
 
-    if (!detailshift)
-    {
+    //if (!detailshift)
+    //{
 	colfunc = basecolfunc = R_DrawColumn;
 	fuzzcolfunc = R_DrawFuzzColumn;
 	transcolfunc = R_DrawTranslatedColumn;
 	spanfunc = R_DrawSpan;
-    }
+    /*}
     else
     {
 	colfunc = basecolfunc = R_DrawColumnLow;
 	fuzzcolfunc = R_DrawFuzzColumn;
 	transcolfunc = R_DrawTranslatedColumn;
 	spanfunc = R_DrawSpanLow;
-    }
+    }*/
 
-    R_InitBuffer (scaledviewwidth, viewheight);
+    //R_InitBuffer (scaledviewwidth, viewheight);
 	
     R_InitTextureMapping ();
     

@@ -196,7 +196,7 @@ void R_ClearPlanes (void)
     lastopening = openings;
     
     // texture calculation
-    memset (cachedheight, 0, sizeof(cachedheight));
+    //memset (cachedheight, 0, sizeof(cachedheight));
 
     // left to right mapping
     angle = (viewangle-ANG90)>>ANGLETOFINESHIFT;

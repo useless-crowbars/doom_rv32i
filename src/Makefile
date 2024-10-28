@@ -45,7 +45,7 @@ SUPPORT_FILES:=startup.S
 CC:=riscv64-elf-gcc
 
 # Tricky - if removing maps, also be careful to add/remove maps from stripchoice.txt
-STRIKEMAP:=-strikemap 2 3 4 5 6 7 8 9 
+STRIKEMAP:=-strikemap 3 4 5 6 7 8 9 
 
 BAKED:=support/baked_texture_data.o support/baked_map_data.o
 # subdirectory for objects

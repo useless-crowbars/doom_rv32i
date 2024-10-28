@@ -1535,6 +1535,7 @@ void WI_loadData(void)
 
 void WI_unloadData(void)
 {
+	return;
     int		i;
     int		j;
 

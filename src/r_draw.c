@@ -925,6 +925,7 @@ V_MarkRect
  
 void R_DrawViewBorder (void) 
 { 
+	return;
     int		top;
     int		side;
     int		ofs;

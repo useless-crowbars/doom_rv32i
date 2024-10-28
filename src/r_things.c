@@ -414,17 +414,17 @@ R_DrawVisSprite
 
 	dc_colormap = vis->colormap;
 	
-	if (!dc_colormap)
+	/*if (!dc_colormap)
 	{
 		// NULL colormap = shadow draw
 		colfunc = fuzzcolfunc;
-	}
-	else if (vis->mobjflags & MF_TRANSLATION)
+	}*/
+	/*else if (vis->mobjflags & MF_TRANSLATION)
 	{
 		colfunc = R_DrawTranslatedColumn;
 		dc_translation = translationtables - 256 +
 			( (vis->mobjflags & MF_TRANSLATION) >> (MF_TRANSSHIFT-8) );
-	}
+	}*/
 		
 	dc_iscale = abs(vis->xiscale)>>detailshift;
 	dc_texturemid = vis->texturemid;
@@ -444,7 +444,7 @@ R_DrawVisSprite
 		R_DrawMaskedColumn (column);
 	}
 
-	colfunc = basecolfunc;
+	//colfunc = basecolfunc;
 }
 
 
@@ -978,7 +978,7 @@ void R_DrawMasked (void)
 			R_DrawSprite (spr);
 		}
 	}
-	
+
 	// render any remaining masked mid textures
 	for (ds=ds_p-1 ; ds >= drawsegs ; ds--)
 		if (ds->maskedtexturecol)
@@ -986,8 +986,8 @@ void R_DrawMasked (void)
 	
 	// draw the psprites on top of everything
 	//  but does not draw on side views
-	//if (!viewangleoffset)				
-	R_DrawPlayerSprites ();
+	if (!viewangleoffset)				
+		R_DrawPlayerSprites ();
 }
 
 

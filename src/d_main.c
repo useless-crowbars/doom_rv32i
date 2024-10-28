@@ -197,18 +197,17 @@ void D_Display (void)
     if (nodrawers)
 	return;                    // for comparative timing / profiling
 		
-    redrawsbar = false;
-  */  
+    redrawsbar = false;  
     // change the view size if needed
     if (setsizeneeded)
     {
 	R_ExecuteSetViewSize ();
-//	oldgamestate = -1;                      // force background redraw
-//	borderdrawcount = 3;
+	oldgamestate = -1;                      // force background redraw
+	borderdrawcount = 3;
     }
 
     // save the current screen if about to wipe
-    /*if (gamestate != wipegamestate)
+    if (gamestate != wipegamestate)
     {
 	wipe = true;
 	wipe_StartScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
@@ -250,15 +249,15 @@ void D_Display (void)
 
     
     // draw buffered stuff to screen
-    I_UpdateNoBlit ();
+    //I_UpdateNoBlit ();
     
     // draw the view directly
     if (gamestate == GS_LEVEL && !automapactive && gametic) {
+		R_ExecuteSetViewSize ();
 		R_RenderPlayerView (&players[displayplayer]);
+		ST_Drawer (viewheight == 200, 0 );
 	}
 
-	ST_Drawer (viewheight == 200, 0 );
-	//R_DrawMasked();
 /*    if (gamestate == GS_LEVEL && gametic)
 	{HU_Drawer ();}
     
@@ -353,10 +352,10 @@ void D_DoomLoop (void)
     while (1)
     {
 	// frame syncronous IO operations
-	I_StartFrame ();                
+	//I_StartFrame ();                
 	
 	// process one or more tics
-	if (singletics)
+	/*if (singletics)
 	{
 	    I_StartTic ();
 	    D_ProcessEvents ();
@@ -369,16 +368,16 @@ void D_DoomLoop (void)
 	    maketic++;
 	}
 	else
-	{
+	{*/
 	    TryRunTics (); // will run at least one tic
-	}
+	//}
 		
 	//S_UpdateSounds (players[consoleplayer].mo);// move positional sounds
 
 	// Update display, next frame, with current state.
 	D_Display ();
 	I_FinishUpdate ();              // page flip or blit buffer
-
+/*
 #ifndef SNDSERV
 	// Sound mixing for the buffer is snychronous.
 	I_UpdateSound();
@@ -387,7 +386,7 @@ void D_DoomLoop (void)
 #ifndef SNDINTR
 	// Update sound output.
 	I_SubmitSound();
-#endif
+#endif*/
     }
 }
 

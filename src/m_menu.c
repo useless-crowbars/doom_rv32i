@@ -1056,7 +1056,7 @@ void M_ChangeDetail(int choice)
 
     // FIXME - does not work. Remove anyway?
 
-    return;
+    //return;
     
     /*R_SetViewSize (screenblocks, detailLevel);
 
