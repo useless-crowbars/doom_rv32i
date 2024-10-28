@@ -55,7 +55,7 @@
 -E1M9
 -TITLEPIC
 -M_*
--WI*
++WI*
 -CREDIT
 -HELP2
 

@@ -14,7 +14,7 @@ byte lpalette[256 * 3];
 #define GPU_ADDR1 0x20000000
 #define GPU_ADDR2 0x20004000
 
-static byte* buffer = (byte*)0x10031fff;
+static byte* buffer = (byte*)0x20008000;
 byte* gpu = (byte*)GPU_ADDR1;
 
 void I_InitGraphics(void)
