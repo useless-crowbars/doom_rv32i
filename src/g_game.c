@@ -999,7 +999,10 @@ void G_SecretExitLevel (void)
  
 void G_DoCompleted (void) 
 { 
-    int             i; 
+	startmap++;
+	G_InitNew(startskill, startepisode, startmap);
+	return;
+    /*int             i; 
 	 
     gameaction = ga_nothing; 
  
@@ -1117,7 +1120,7 @@ void G_DoCompleted (void)
     if (statcopy)
 	memcpy (statcopy, &wminfo, sizeof(wminfo));
 	
-    WI_Start (&wminfo); 
+    WI_Start (&wminfo); */
 } 
 
 
