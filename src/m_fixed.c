@@ -33,6 +33,7 @@
 #endif
 #include "m_fixed.h"
 
+#include <stdint.h>
 
 
 
@@ -52,19 +53,37 @@ FixedMul
 //
 // FixedDiv, C version.
 //
+//
 
-fixed_t
-FixedDiv
-( fixed_t	a,
-  fixed_t	b )
-{
-    if ( (abs(a)>>14) >= abs(b))
-	return (a^b)<0 ? MININT : MAXINT;
-    return FixedDiv2 (a,b);
+
+__attribute__((section(".critical")))
+fixed_t FixedDiv (fixed_t a, fixed_t b) {
+    if ((abs(a) >> 14) >= abs(b)) {
+        return (a ^ b) < 0 ? MININT : MAXINT;
+    }
+
+	int sign = ((a < 0) ^ (b < 0)) ? -1 : 1;
+	uint32_t ua = (a < 0) ? -a : a;
+	uint32_t ub = (b < 0) ? -b : b;
+
+	uint64_t numerator = (uint64_t)ua << 16;
+	uint32_t result = 0;
+
+	for (int i = 31; i >= 0; i--) {
+		if ((numerator >> i) >= ub) {
+			numerator -= ((uint64_t)ub << i);
+			result += (1U << i);
+		}
+	}
+
+	return (fixed_t)(sign * result);
+
+	/*   if ( (abs(a)>>14) >= abs(b))*/
+	/*return (a^b)<0 ? MININT : MAXINT;*/
+	/*   return FixedDiv2 (a,b);*/
 }
-
-#include <stdint.h>
-uint32_t __attribute__((weak, section(".critical")))
+/*
+	uint32_t __attribute__((weak))
 __div64_32(uint64_t *n, uint32_t base)
 {
 	uint64_t rem = *n;
@@ -72,7 +91,7 @@ __div64_32(uint64_t *n, uint32_t base)
 	uint64_t res, d = 1;
 	uint32_t high = rem >> 32;
 
-	/* Reduce the thing a bit first */
+	//Reduce the thing a bit first
 	res = 0;
 	if (high >= base) {
 		high /= base;
@@ -111,22 +130,24 @@ int32_t division (int64_t jedan, int32_t dva) {
 }
 
 fixed_t
-FixedDiv2
+	FixedDiv2
 ( fixed_t	a,
   fixed_t	b )
 {
 #if 1
-    long long c;
-    c = division(((long long)a<<16) , ((long long)b));
-    return (fixed_t) c;
+	long long c;
+	c = division(((long long)a<<16) , ((long long)b));
+	return (fixed_t) c;
 
 #else
-    double c;
+	double c;
 
-    c = ((double)a) / ((double)b) * FRACUNIT;
+	c = ((double)a) / ((double)b) * FRACUNIT;
 
-    if (c >= 2147483648.0 || c < -2147483648.0)
-	I_Error("FixedDiv: divide by zero");
-    return (fixed_t) c;
+	if (c >= 2147483648.0 || c < -2147483648.0)
+		I_Error("FixedDiv: divide by zero");
+	return (fixed_t) c;
 #endif
 }
+
+*/

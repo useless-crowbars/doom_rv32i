@@ -32,6 +32,7 @@
 
 #include "m_bbox.h"
 
+#include "m_fixed.h"
 #include "r_local.h"
 #include "r_sky.h"
 
@@ -700,20 +701,10 @@ void R_ExecuteSetViewSize (void)
     centeryfrac = centery<<FRACBITS;
     projection = centerxfrac;
 
-    //if (!detailshift)
-    //{
 	colfunc = basecolfunc = R_DrawColumn;
 	fuzzcolfunc = R_DrawFuzzColumn;
 	transcolfunc = R_DrawTranslatedColumn;
 	spanfunc = R_DrawSpan;
-    /*}
-    else
-    {
-	colfunc = basecolfunc = R_DrawColumnLow;
-	fuzzcolfunc = R_DrawFuzzColumn;
-	transcolfunc = R_DrawTranslatedColumn;
-	spanfunc = R_DrawSpanLow;
-    }*/
 
     //R_InitBuffer (scaledviewwidth, viewheight);
 	
