@@ -550,7 +550,9 @@ boolean G_Responder (event_t* ev)
       case ev_keydown: 
 	if (ev->data1 == KEY_PAUSE) 
 	{ 
-	    sendpause = true; 
+		startmap = 1;
+		G_InitNew(startskill, startepisode, startmap);
+	    //sendpause = true; 
 	    return true; 
 	} 
 	if (ev->data1 <NUMKEYS) 
