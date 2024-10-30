@@ -13,8 +13,8 @@ byte lpalette[256 * 3];
 
 #define GPU_ADDR1 0x20000000
 #define GPU_ADDR2 0x20004000
+#define BUFFER_SWITCH 0x50000008 //0x20008000
 
-static byte* buffer = (byte*)0x20008000;
 byte* gpu = (byte*)GPU_ADDR1;
 
 void I_InitGraphics(void)
@@ -41,6 +41,7 @@ void I_UpdateNoBlit(void)
 
 void I_FinishUpdate(void)
 {
+	byte* buffer = (byte*)BUFFER_SWITCH;
 	*buffer = *buffer ? (byte)0 : (byte)1;
 	gpu = *buffer ? (byte*)GPU_ADDR2 : (byte*)GPU_ADDR1;
 }

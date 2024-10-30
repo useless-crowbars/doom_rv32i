@@ -581,7 +581,7 @@ void TryRunTics (void)
     oldentertics = entertic;
     
     // get available tics
-    NetUpdate ();
+    //NetUpdate ();
 	
     lowtic = MAXINT;
     numplaying = 0;

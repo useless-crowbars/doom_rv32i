@@ -115,7 +115,7 @@ typedef enum
 
 // The maximum number of players, multiplayer/networking.
 #ifndef MAXPLAYERS
-#define MAXPLAYERS		4
+#define MAXPLAYERS		1
 #endif
 
 // State updates, number of tics / second.

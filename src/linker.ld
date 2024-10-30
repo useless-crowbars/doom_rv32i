@@ -36,7 +36,7 @@ SECTIONS
 	*(.sbss.*)
     }
 
-    . = 0x10150000;
+    . = 0x10100000;
     .rodata :
     {
         *(.rodata)
@@ -45,7 +45,7 @@ SECTIONS
         *(.srodata.*)
     }
 
-    . = 0x40000000;
+    . = 0x14000000;
 
     /DISCARD/ :
     {

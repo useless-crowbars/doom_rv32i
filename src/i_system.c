@@ -41,9 +41,9 @@
 
 
 #ifdef COMBINE_SCREENS
-unsigned char CombinedScreens[SCREENWIDTH*SCREENHEIGHT];
+unsigned char CombinedScreens[1];
 #else
-unsigned char CombinedScreens[SCREENWIDTH*SCREENHEIGHT*4];
+unsigned char CombinedScreens[1];
 #endif
 
 
@@ -100,7 +100,7 @@ int  I_GetTime (void)
     return newtics;
 #else
     static int basetime = 0;
-    basetime += TICRATE * 100;
+    basetime += TICRATE * 10;
     return basetime;
 #endif
 }
@@ -112,7 +112,7 @@ int  I_GetTime (void)
 //
 void I_Init (void)
 {
-    I_InitSound();
+    ///I_InitSound();
     //  I_InitGraphics();
 }
 

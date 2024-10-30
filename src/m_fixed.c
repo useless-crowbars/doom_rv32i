@@ -58,13 +58,14 @@ FixedMul
 
 __attribute__((section(".critical")))
 fixed_t FixedDiv (fixed_t a, fixed_t b) {
-    if ((abs(a) >> 14) >= abs(b)) {
+	uint32_t ua = (a < 0) ? -a : a;
+	uint32_t ub = (b < 0) ? -b : b;
+
+    if ((ua >> 14) >= ub) {
         return (a ^ b) < 0 ? MININT : MAXINT;
     }
 
 	int sign = ((a < 0) ^ (b < 0)) ? -1 : 1;
-	uint32_t ua = (a < 0) ? -a : a;
-	uint32_t ub = (b < 0) ? -b : b;
 
 	uint64_t numerator = (uint64_t)ua << 16;
 	uint32_t result = 0;
