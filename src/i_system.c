@@ -100,8 +100,8 @@ int  I_GetTime (void)
     return newtics;
 #else
     static int basetime = 0;
-    basetime += TICRATE * 10;
-    return basetime;
+    basetime += TICRATE;
+    return basetime / 60;
 #endif
 }
 
