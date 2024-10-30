@@ -212,6 +212,8 @@ void R_ClearPlanes (void)
 //
 // R_FindPlane
 //
+
+__attribute__((section(".critical")))
 visplane_t*
 R_FindPlane
 ( fixed_t	height,
@@ -264,6 +266,8 @@ R_FindPlane
 //
 // R_CheckPlane
 //
+
+__attribute__((section(".critical")))
 visplane_t*
 R_CheckPlane
 ( visplane_t*	pl,

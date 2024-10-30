@@ -844,6 +844,8 @@ void R_SortVisSprites (void)
 //
 // R_DrawSprite
 //
+
+__attribute__((section(".critical")))
 void R_DrawSprite (vissprite_t* spr)
 {
 	drawseg_t*				ds;

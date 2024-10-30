@@ -453,7 +453,7 @@ void D_DoomMain (void)
 
 	D_CheckNetGame ();
 
-	S_Init (snd_SfxVolume /* *8 */, snd_MusicVolume /* *8*/ );
+	//S_Init (snd_SfxVolume /* *8 */, snd_MusicVolume /* *8*/ );
 
 	HU_Init ();
 

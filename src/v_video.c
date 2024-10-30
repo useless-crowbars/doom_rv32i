@@ -217,11 +217,7 @@ void V_DrawPatch(int x, int y, int scrn, patch_t* patch) {
     col = 0;
     w = SHORT(patch->width);
 
-    for (; col < w; x++, col++) {
-        if (x % 2 != 0)
-            continue;
-
-        int scaled_x = x / 2;
+    for (int scaled_x = x / 2; col < w; scaled_x++, col+=2) {
 
         column = (column_t*)((byte*)patch + LONG(patch->columnofs[col]));
 
