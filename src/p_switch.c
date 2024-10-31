@@ -209,7 +209,9 @@ P_ChangeSwitchTexture
     int     sound;
 	
     if (!useAgain)
-	line->special = 0;
+		line->special = 0;
+
+	return;
 
     texTop = sides[line->sidenum[0]].toptexture;
     texMid = sides[line->sidenum[0]].midtexture;
