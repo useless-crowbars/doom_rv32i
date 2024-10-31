@@ -1,27 +1,8 @@
-# Not used before E1M3
-# Use this command to do E1M1Only. 
-# make clean && cp support/stripchoice-E1M1ONLY.txt support/stripchoice.txt && cp support/stripchoice-E1M1ONLY.txt support/stripchoicebegin.txt && EXTRA_CFLAGS="-DE1M1ONLY=1" make && ls -l emdoom
-
--BOSS*
--MIS*
--SOUL*
--TRE*
--SPOS*
--DPS*
--DSS*
--SARG*
-+BAL*
--DSB*
--MAN*
--DSP*
++*
 -DSTELEPT
--D_E1*
 -D_INTER
 -D_VICTOR
 -GENMIDI
-+PUNG*
-+SHT*
-
 -DSRLAUNC
 -DSRXPLOD
 -DSFIRSHT
@@ -29,17 +10,8 @@
 -DSDOROPN
 -DSDORCLS
 -DSDMACT
--HELP1
-+D_E1M1
 
-
-+S_END
-+F1_END
-+F_END
-+P1_END
-+P_END
-+F_START
-+F1_START
+-D_E1*
 
 -DEMO1
 -DEMO2
@@ -53,17 +25,10 @@
 -E1M7
 -E1M8
 -E1M9
+
 -TITLEPIC
 -M_*
-+WI*
+-WI*
 -CREDIT
+-HELP1
 -HELP2
-
-
-+PIS*
-+PUFF*
-+BEXP*
-+BLUD*
-+CHG*
-+PISG*
-+BON2*

@@ -1002,6 +1002,7 @@ void G_SecretExitLevel (void)
 void G_DoCompleted (void) 
 { 
 	startmap++;
+	if(startmap == 3) startmap = 1;
 	G_InitNew(startskill, startepisode, startmap);
 	return;
     /*int             i; 
