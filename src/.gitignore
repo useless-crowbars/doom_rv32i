@@ -13,3 +13,4 @@ support/rawwad_use.c
 support/rawwad_use.h
 support/rawwad_use.o
 support/shrinkwad
+*.dump
