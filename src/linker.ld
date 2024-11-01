@@ -18,7 +18,7 @@ SECTIONS
         *(.critical)
     }
 
-    . = 0x10040000;
+    . = 0x10032000;
     .data :
     {
 	*(.data)
@@ -27,7 +27,7 @@ SECTIONS
 	*(.sdata.*)
     }
 
-    . = 0x10050000;
+    . = 0x10040000;
     .bss :
     {
 	*(.bss)
@@ -36,7 +36,7 @@ SECTIONS
 	*(.sbss.*)
     }
 
-    . = 0x10100000;
+    . = 0x100c0000;
     .rodata :
     {
         *(.rodata)

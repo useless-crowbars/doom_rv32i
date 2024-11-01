@@ -6,7 +6,7 @@
 #include "i_video_pajseri.h"
 
 #ifdef __riscv
-byte* lpalette = (byte*) 0x10032000;
+byte* lpalette = (byte*) 0x10031c00;
 #else
 byte lpalette[256 * 3];
 #endif
