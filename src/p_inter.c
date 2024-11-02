@@ -299,6 +299,7 @@ P_GivePower
     
     if (power == pw_invisibility)
     {
+		return false;
 	player->powers[power] = INVISTICS;
 	player->mo->flags |= MF_SHADOW;
 	return true;
