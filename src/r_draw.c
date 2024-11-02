@@ -125,11 +125,11 @@ void R_DrawColumn(void)
 
 	int new_x = dc_x >> 1;
 	int new_y = dc_yl >> 1;
-	byte* dest = gpu + new_y * 160 + new_x;
+	byte* dest = FRAMEBUFFER + new_y * 160 + new_x;
 
 	do {
     	byte col = dc_colormap[dc_source[(frac >> FRACBITS) & 127]];
-	    *dest = lpalette[col];
+	    *dest = *(LPALETTE + col);
     	dest += 160;
     	frac += fracstep;
 	} while (count--);
@@ -582,12 +582,12 @@ void R_DrawSpan(void)
 	int yinc =  ds_ystep * 2;
 	int new_y = ds_y >> 1;
 
-	byte* dest = gpu + new_y * 160 + (ds_x1 >> 1);
+	byte* dest = FRAMEBUFFER + new_y * 160 + (ds_x1 >> 1);
 
 	do {
     	int spot = ((yfrac >> (16 - 6)) & (63 * 64)) + ((xfrac >> 16) & 63);
     	byte col = ds_colormap[ds_source[spot]];
-    	*dest++ = lpalette[col];
+    	*dest++ = *(LPALETTE + col);
     	xfrac += xinc;
     	yfrac += yinc;
 	} while (count--);

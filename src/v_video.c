@@ -216,6 +216,8 @@ void V_DrawPatch(int x, int y, int scrn, patch_t* patch) {
 
     col = 0;
     w = SHORT(patch->width);
+	
+	byte* framebuffer = FRAMEBUFFER;
 
     for (int scaled_x = x / 2; col < w; scaled_x++, col+=2) {
 
@@ -225,12 +227,12 @@ void V_DrawPatch(int x, int y, int scrn, patch_t* patch) {
             source = (byte*)column + 3;
             int scaled_y = (y + column->topdelta) / 2;
 
-            byte* dest = gpu + scaled_y * 160 + scaled_x;
+            byte* dest = framebuffer + scaled_y * 160 + scaled_x;
 
             count = column->length / 2;
 
             while (count--) {
-                *dest = lpalette[*source];
+                *dest = *(LPALETTE + *source);
                 dest += 160;
 				source += 2;
             }

@@ -5,17 +5,9 @@
 #include "v_video.h"
 #include "i_video_pajseri.h"
 
-#ifdef __riscv
-byte* lpalette = (byte*) 0x10031c00;
-#else
+#ifndef __riscv
 byte lpalette[256 * 3];
 #endif
-
-#define GPU_ADDR1 0x20000000
-#define GPU_ADDR2 0x20004000
-#define BUFFER_SWITCH 0x50000008 //0x20008000
-
-byte* gpu = (byte*)GPU_ADDR1;
 
 void I_InitGraphics(void)
 {
@@ -31,7 +23,11 @@ void I_SetPalette(byte *palette)
 		uint8_t b = (palette[i * 3 + 2] & 0xc0);
 		uint8_t g = (palette[i * 3 + 1] & 0xe0) >> 2;
 		uint8_t r = (palette[i * 3 + 0] & 0xe0) >> 5;
+#ifdef __riscv	
+		*(LPALETTE + i) = b | g | r;
+#else
 		lpalette[i] = b | g | r; 
+#endif
 	}
 }
 
@@ -43,7 +39,6 @@ void I_FinishUpdate(void)
 {
 	byte* buffer = (byte*)BUFFER_SWITCH;
 	*buffer = *buffer ? (byte)0 : (byte)1;
-	gpu = *buffer ? (byte*)GPU_ADDR2 : (byte*)GPU_ADDR1;
 }
 
 void I_StartFrame()
