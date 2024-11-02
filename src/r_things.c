@@ -354,6 +354,7 @@ short*				mceilingclip;
 fixed_t				spryscale;
 fixed_t				sprtopscreen;
 
+__attribute__((section(".critical")))
 void R_DrawMaskedColumn (column_t* column)
 {
 	int				topscreen;

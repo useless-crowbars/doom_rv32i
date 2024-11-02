@@ -107,7 +107,6 @@ __attribute__((section(".critical")))
 void R_DrawColumn(void)
 {
     int         count;
-    byte*       dest;
     fixed_t     frac;
     fixed_t     fracstep;
 
@@ -120,21 +119,18 @@ void R_DrawColumn(void)
         || dc_yh >= SCREENHEIGHT)
         I_Error("R_DrawColumn: %i to %i at %i", dc_yl, dc_yh, dc_x);
 #endif
-	fracstep = dc_iscale;
-	frac = dc_texturemid + (dc_yl - centery) * fracstep;
+	fracstep = dc_iscale * 2;
+	frac = dc_texturemid + (dc_yl - centery) * dc_iscale;
 	count = (count + 1) / 2;
-	fracstep *= 2;
 
 	int new_x = dc_x >> 1;
 	int new_y = dc_yl >> 1;
-	int gpu_index_base = new_y * 160 + new_x;
+	byte* dest = gpu + new_y * 160 + new_x;
 
 	do {
     	byte col = dc_colormap[dc_source[(frac >> FRACBITS) & 127]];
-	    gpu[gpu_index_base] = lpalette[col];
-
-    	new_y++;
-    	gpu_index_base = new_y * 160 + new_x;
+	    *dest = lpalette[col];
+    	dest += 160;
     	frac += fracstep;
 	} while (count--);
 }
@@ -586,13 +582,12 @@ void R_DrawSpan(void)
 	int yinc =  ds_ystep * 2;
 	int new_y = ds_y >> 1;
 
-	int gpu_index = new_y * 160 + (ds_x1 >> 1);
+	byte* dest = gpu + new_y * 160 + (ds_x1 >> 1);
 
 	do {
     	int spot = ((yfrac >> (16 - 6)) & (63 * 64)) + ((xfrac >> 16) & 63);
     	byte col = ds_colormap[ds_source[spot]];
-    	gpu[gpu_index++] = lpalette[col];
-
+    	*dest++ = lpalette[col];
     	xfrac += xinc;
     	yfrac += yinc;
 	} while (count--);

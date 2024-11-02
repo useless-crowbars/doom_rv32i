@@ -180,6 +180,8 @@ R_MapPlane
 // R_ClearPlanes
 // At begining of frame.
 //
+
+__attribute__((weak, section(".critical")))
 void R_ClearPlanes (void)
 {
     int		i;

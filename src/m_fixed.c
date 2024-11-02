@@ -84,8 +84,8 @@ fixed_t FixedDiv (fixed_t a, fixed_t b) {
 	return FixedDiv2 (a,b);
 }
 
-	uint32_t __attribute__((weak))
-__div64_32(uint64_t *n, uint32_t base)
+__attribute__((weak, section(".critical")))
+uint32_t __div64_32(uint64_t *n, uint32_t base)
 {
 	uint64_t rem = *n;
 	uint64_t b = base;
