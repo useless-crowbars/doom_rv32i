@@ -58,32 +58,32 @@ FixedMul
 
 __attribute__((section(".critical")))
 fixed_t FixedDiv (fixed_t a, fixed_t b) {
-	uint32_t ua = (a < 0) ? -a : a;
-	uint32_t ub = (b < 0) ? -b : b;
+	/*	uint32_t ua = (a < 0) ? -a : a;
+		uint32_t ub = (b < 0) ? -b : b;
 
-    if ((ua >> 14) >= ub) {
-        return (a ^ b) < 0 ? MININT : MAXINT;
-    }
-
-	int sign = ((a < 0) ^ (b < 0)) ? -1 : 1;
-
-	uint64_t numerator = (uint64_t)ua << 16;
-	uint32_t result = 0;
-
-	for (int i = 31; i >= 0; i--) {
-		if ((numerator >> i) >= ub) {
-			numerator -= ((uint64_t)ub << i);
-			result += (1U << i);
+		if ((ua >> 14) >= ub) {
+		return (a ^ b) < 0 ? MININT : MAXINT;
 		}
-	}
 
-	return (fixed_t)(sign * result);
+		int sign = ((a < 0) ^ (b < 0)) ? -1 : 1;
 
-	/*   if ( (abs(a)>>14) >= abs(b))*/
-	/*return (a^b)<0 ? MININT : MAXINT;*/
-	/*   return FixedDiv2 (a,b);*/
+		uint64_t numerator = (uint64_t)ua << 16;
+		uint32_t result = 0;
+
+		for (int i = 31; i >= 0; i--) {
+		if ((numerator >> i) >= ub) {
+		numerator -= ((uint64_t)ub << i);
+		result += (1U << i);
+		}
+		}
+
+		return (fixed_t)(sign * result);
+		*/
+	if ( (abs(a)>>14) >= abs(b))
+		return (a^b)<0 ? MININT : MAXINT;
+	return FixedDiv2 (a,b);
 }
-/*
+
 	uint32_t __attribute__((weak))
 __div64_32(uint64_t *n, uint32_t base)
 {
@@ -150,5 +150,3 @@ fixed_t
 	return (fixed_t) c;
 #endif
 }
-
-*/
