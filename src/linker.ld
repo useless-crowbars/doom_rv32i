@@ -27,7 +27,7 @@ SECTIONS
 	*(.sdata.*)
     }
 
-    . = 0x10040000;
+    . = 0x1003e600;
     .bss :
     {
 	*(.bss)
@@ -36,7 +36,7 @@ SECTIONS
 	*(.sbss.*)
     }
 
-    . = 0x100c0000;
+    . = 0x100b6d00;
     .rodata :
     {
         *(.rodata)

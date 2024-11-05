@@ -38,7 +38,7 @@ CFLAGS+=-DSET_MEMORY_DEBUG=0
 #CFLAGS_HOST+=-fsanitize=address -static-libasan -g
 
 # For RISC-V
-CFLAGS:=-O3 -D__STDC_HOSTED__=0 -w $(IGNORE_WARNINGS) -march=rv32im -mabi=ilp32 -nostdlib -ffreestanding -DMAXPLAYERS=1 -DDISABLE_NETWORK -fdata-sections -ffunction-sections $(EXTRA_CFLAGS)
+CFLAGS:=-Os -D__STDC_HOSTED__=0 -w $(IGNORE_WARNINGS) -march=rv32im -mabi=ilp32 -nostdlib -ffreestanding -DMAXPLAYERS=1 -DDISABLE_NETWORK -fdata-sections -ffunction-sections $(EXTRA_CFLAGS)
 LDFLAGS:= -T linker.ld $(CFLAGS)
 LIBS:=
 SUPPORT_FILES:=startup.S
