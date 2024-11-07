@@ -101,7 +101,7 @@ int  I_GetTime (void)
 #else
     static int basetime = 0;
     basetime += TICRATE;
-    return basetime / 15; // 15 za normalnu brzinu, 12 za mishu;
+    return basetime / 6; // 6 za normalnu brzinu, 1 za mishu;
 #endif
 }
 
