@@ -650,11 +650,11 @@ void TryRunTics (void)
 	    I_Error ("TryRunTics: lowtic < gametic");
 				
 	// don't stay in here forever -- give the menu a chance to work
-	if (I_GetTime ()/ticdup - entertic >= 20)
+	/*if (I_GetTime ()/ticdup - entertic >= 20)
 	{
 	    M_Ticker ();
 	    return;
-	} 
+	}*/ 
     }
     
     // run the count * ticdup dics
@@ -664,9 +664,9 @@ void TryRunTics (void)
 	{
 	    if (gametic/ticdup > lowtic)
 		I_Error ("gametic>lowtic");
-	    if (advancedemo)
-		D_DoAdvanceDemo ();
-	    M_Ticker ();
+	    //if (advancedemo)
+		//D_DoAdvanceDemo ();
+	    //M_Ticker ();
 	    G_Ticker ();
 	    gametic++;
 	    

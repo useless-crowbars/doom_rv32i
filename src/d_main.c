@@ -158,8 +158,8 @@ void D_ProcessEvents (void)
     for ( ; eventtail != eventhead ; eventtail = (++eventtail)&(MAXEVENTS-1) )
     {
 	ev = &events[eventtail];
-	if (M_Responder (ev))
-	    continue;               // menu ate the event
+	//if (M_Responder (ev))
+	//    continue;               // menu ate the event
 	G_Responder (ev);
     }
 }
