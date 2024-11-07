@@ -487,6 +487,23 @@ void G_DoLoadLevel (void)
 } 
  
  
+void change_weapon(player_t *player) {
+    int current_weapon = player->readyweapon;
+    int next_weapon = (current_weapon + 1) % NUMWEAPONS;
+
+    while (next_weapon != current_weapon) {
+        if (player->weaponowned[next_weapon] &&
+            (weaponinfo[next_weapon].ammo == am_noammo ||
+             player->ammo[weaponinfo[next_weapon].ammo] > 0))
+        {
+            player->pendingweapon = next_weapon;
+            break;
+        }
+
+        next_weapon = (next_weapon + 1) % NUMWEAPONS;
+    }
+}
+
 //
 // G_Responder  
 // Get info needed to make ticcmd_ts for the players.
@@ -531,13 +548,13 @@ boolean G_Responder (event_t* ev)
 	    return true; 
 	} 
 #endif 
-	if (HU_Responder (ev)) 
+	/*if (HU_Responder (ev)) 
 	    return true;	// chat ate the event 
 	if (ST_Responder (ev)) 
-	    return true;	// status window ate it 
+	    return true;	// status window ate it*/ 
 	if (AM_Responder (ev)) 
 	    return true;	// automap ate it 
-    } 
+    }
 	 
     if (gamestate == GS_FINALE) 
     { 
@@ -553,6 +570,11 @@ boolean G_Responder (event_t* ev)
 		startmap = 1;
 		G_InitNew(startskill, startepisode, startmap);
 	    //sendpause = true; 
+	    return true; 
+	} 
+	if (ev->data1 == KEY_ENTER) 
+	{ 
+		change_weapon(&players[0]);
 	    return true; 
 	} 
 	if (ev->data1 <NUMKEYS) 

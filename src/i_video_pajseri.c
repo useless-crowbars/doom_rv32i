@@ -148,13 +148,13 @@ void I_StartTic()
 	if (SHIFT & key) {
 		event_t event;
 		event.type = ev_keydown;
-		event.data1 = KEY_PAUSE;
+		event.data1 = KEY_ENTER;
 		D_PostEvent(&event);
 		kb_status |= SHIFT;
 	} else if (kb_status & SHIFT) {
 		event_t event;
 		event.type = ev_keyup;
-		event.data1 = KEY_PAUSE;
+		event.data1 = KEY_ENTER;
 		D_PostEvent(&event);
 		kb_status &= (uint8_t)~SHIFT;
 	}
