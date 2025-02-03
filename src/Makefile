@@ -116,7 +116,7 @@ all:	 emdoom
 emdoom:	$(CS) i_main.c $(BAKED) $(SUPPORT_FILES) support/rawwad_use.o
 	$(CC) $(CFLAGS_FINAL)  $^ -o emdoom $(LDFLAGS) $(LIBS)
 
-support/baked_texture_data.c support/baked_map_data.c bakedoutput.txt : emdoom.gentables.initial
+support/baked_texture_data.c support/baked_map_data.c support/bakedoutput.txt : emdoom.gentables.initial
 	./emdoom.gentables.initial $(STRIKEMAP) > support/bakedoutput.txt
 
 support/add_sprites.txt : support/bakedoutput.txt support/augment_sprites.txt
@@ -140,21 +140,17 @@ support/rawwad.c : support/wadder
 	(cd support;./wadder;cd ..)
 
 support/rawwad_use.o : support/rawwad_use.c
-	$(CC) $(CFLAGS) -c -o tmp.o $^
-	mv tmp.o $@
+	$(CC) $(CFLAGS) -c -o $@ $^
 
 
 support/rawwad_use_host.o : support/rawwad_use.c
-	$(CC_HOST) $(CFLAGS_HOST) -c -o tmp.o $^
-	mv tmp.o $@
+	$(CC_HOST) $(CFLAGS_HOST) -c -o $@ $^
 
 support/rawwad_host.o : support/rawwad.c
-	$(CC_HOST) $(CFLAGS_HOST) -c -o tmp.o $^
-	mv tmp.o $@
+	$(CC_HOST) $(CFLAGS_HOST) -c -o $@ $^
 
 support/rawwad_host_begin.o : support/rawwad_begin.c
-	$(CC_HOST) $(CFLAGS_HOST) -c -o tmp.o $^
-	mv tmp.o $@
+	$(CC_HOST) $(CFLAGS_HOST) -c -o $@ $^
 
 
 emdoom.size : emdoom
