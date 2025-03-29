@@ -115,6 +115,7 @@ all:	 emdoom
 
 emdoom:	$(CS) i_main.c $(BAKED) $(SUPPORT_FILES) support/rawwad_use.o
 	$(CC) $(CFLAGS_FINAL)  $^ -o emdoom $(LDFLAGS) $(LIBS)
+	riscv64-elf-objcopy -O binary emdoom emdoom.bin
 
 support/baked_texture_data.c support/baked_map_data.c support/bakedoutput.txt : emdoom.gentables.initial
 	./emdoom.gentables.initial $(STRIKEMAP) > support/bakedoutput.txt
@@ -166,7 +167,7 @@ emdoom.gentables.initial : i_main.c $(CS) support/rawwad_host_begin.o
 
 clean:
 	rm -f *.o *~ *.flc
-	rm -f emdoom emdoom.gentables emdoom.gentables.initial $(BAKED) support/wadder support/rawwad_host.o support/rawwad_host_use.o support/rawwad_host_begin.o support/shrinkwad
+	rm -f emdoom emdoom.bin emdoom.gentables emdoom.gentables.initial $(BAKED) support/wadder support/rawwad_host.o support/rawwad_host_use.o support/rawwad_host_begin.o support/shrinkwad
 	rm -rf support/baked_map_data.c  support/baked_texture_data.c
 	rm -rf support/rawwad_begin.c support/rawwad_begin.o support/rawwad_use.c support/rawwad_use.o support/bakedoutput.txt
 	rm -rf support/add_sprites.txt support/rawwad_begin.h support/rawwad_use.h

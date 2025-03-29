@@ -37,8 +37,8 @@ void I_UpdateNoBlit(void)
 
 void I_FinishUpdate(void)
 {
-	byte* buffer = (byte*)BUFFER_SWITCH;
-	*buffer = *buffer ? (byte)0 : (byte)1;
+	//byte* buffer = (byte*)BUFFER_SWITCH;
+	//*buffer = *buffer ? (byte)0 : (byte)1;
 }
 
 void I_StartFrame()
