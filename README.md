@@ -2,7 +2,7 @@
 
 This project is a port of the original **DOOM** game to a **custom RISC-V processor** supporting the **RV32IM** instruction set.
 
-https://github.com/useless-crowbars/doom_rv32i/blob/master/demo.mp4
+https://github.com/user-attachments/assets/bda750c4-0d4c-4dc9-bb4f-c1085881695f
 
 ## Rendering
 
@@ -27,8 +27,7 @@ The resulting binary, `emdoom`, occupies less than 4 MB and includes the first f
 
 ## Running on the Emulator
 
-The port can be tested using the RISC-V emulator available here:  
-[https://github.com/useless-crowbars/emu_rv32i](https://github.com/useless-crowbars/emu_rv32i)
+The port can be tested using the RISC-V emulator available [here](https://github.com/useless-crowbars/emu_rv32i).
 
 To run the game, execute the following command:  
 ```bash
