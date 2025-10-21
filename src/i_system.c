@@ -80,7 +80,6 @@ byte* I_ZoneBase (int*	size)
 }
 
 
-
 //
 // I_GetTime
 // returns time in 1/70th second tics
@@ -89,11 +88,11 @@ int  I_GetTime (void)
 {
 #ifndef __riscv
     struct timeval	tp;
-    struct timezone	tzp;
+    // struct timezone	tzp;
     int			newtics;
     static int		basetime=0;
   
-    gettimeofday(&tp, &tzp);
+    gettimeofday(&tp, NULL);
     if (!basetime)
 	basetime = tp.tv_sec;
     newtics = (tp.tv_sec-basetime)*TICRATE + tp.tv_usec*TICRATE/1000000;

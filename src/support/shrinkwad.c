@@ -72,7 +72,7 @@ int main( int argc, char ** argv )
 	}
 	char *line = NULL;
 	size_t len = 0;
-	ssize_t drd;
+	size_t drd;
 	int i;
 	int chunkmap[numlumps];
 	

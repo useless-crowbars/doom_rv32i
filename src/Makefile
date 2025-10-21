@@ -19,10 +19,8 @@ EXTRA_CFLAGS="-DE1M1ONLY=1"
 IGNORE_WARNINGS=-Wno-int-conversion -Wno-incompatible-pointer-types -Wno-implicit-int -Wno-implicit-function-declaration
 CFLAGS?=-m32 -Os -g -w $(IGNORE_WARNINGS) -flto -DMAXPLAYERS=1 -DRANGECHECK -DDISABLE_NETWORK -fdata-sections -ffunction-sections $(EXTRA_CFLAGS) # -DUSEASM
 LDFLAGS?=-L/usr/X11R6/lib -Wl,--gc-sections $(CFLAGS)
-LIBS?=-lglfw -lGL
-CFLAGS_HOST?=-m32 $(IGNORE_WARNINGS) $(EXTRA_CFLAGS)
+CFLAGS_HOST?=-std=c17 -m32 $(IGNORE_WARNINGS) $(EXTRA_CFLAGS)
 LDFLAGS_HOST?=-L/usr/X11R6/lib
-LIBS_HOST?=-lglfw -lGL
 CS?=i_video_pajseri.c ../../emu_rv32i/stdlib/*.c
 
 

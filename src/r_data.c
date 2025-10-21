@@ -248,6 +248,8 @@ void R_GenerateLookup (int texnum)
 {
 #ifdef GENERATE_BAKED
 
+#include <alloca.h>
+
 	texture_t*				texture;
 	byte*				patchcount;		// patchcount[texture->width]
 	texpatch_t*				patch;		

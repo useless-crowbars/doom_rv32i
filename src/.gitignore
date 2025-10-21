@@ -1,4 +1,5 @@
 emdoom
+emdoom.bin
 emdoom.gentables.initial
 support/add_sprites.txt
 support/baked_map_data.c
